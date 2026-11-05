@@ -549,103 +549,7 @@
       });
     });
   }
-
-  // 7. Yazıyı Kaydetme / Yer İmi (Bookmark System)
-  function initBookmarkControls() {
-    const bookmarkBtn = document.getElementById('btn-bookmark-toggle');
-    if (!bookmarkBtn) return;
-
-    // Post kimliği ve meta bilgileri
-    const postTitle = document.querySelector('.post-title')?.textContent?.trim() || document.title;
-    const timeEl = document.querySelector('.post-meta time');
-    const postDate = timeEl?.getAttribute('datetime') || '';
-    const postDateFormatted = timeEl?.textContent?.trim() || '';
-    const readingTime = document.getElementById('reading-time')?.textContent?.trim() || '3 dk okuma';
-    const postSubtitle = document.querySelector('.post-subtitle')?.textContent?.trim() || '';
-    const coverImg = document.querySelector('.post-cover img');
-    const postImage = coverImg?.getAttribute('src') || '';
-    const postImageAlt = coverImg?.getAttribute('alt') || postTitle;
-
-    // URL ve Slug tespiti
-    const pathParts = window.location.pathname.split('/');
-    let filename = pathParts.pop() || '';
-    if (!filename || filename === '/') {
-      filename = 'index.html';
-    }
-    const slug = filename.replace(/\.html$/, '');
-    const postUrl = filename;
-
-    function getBookmarks() {
-      try {
-        const raw = storage.get('dl_bookmarks', '[]');
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function saveBookmarks(list) {
-      storage.set('dl_bookmarks', JSON.stringify(list));
-    }
-
-    function isBookmarked() {
-      const list = getBookmarks();
-      return list.some(item => item.slug === slug || item.url === postUrl || (item.id && item.id === slug));
-    }
-
-    function updateButtonUI(bookmarked) {
-      const textSpan = bookmarkBtn.querySelector('.bookmark-text');
-      const iconSvg = bookmarkBtn.querySelector('.bookmark-icon');
-
-      if (bookmarked) {
-        bookmarkBtn.classList.add('active');
-        bookmarkBtn.setAttribute('aria-pressed', 'true');
-        bookmarkBtn.setAttribute('title', 'Bu yazıyı kaydedilenlerden çıkar');
-        if (textSpan) textSpan.textContent = 'Kaydedildi ✓';
-        if (iconSvg) iconSvg.setAttribute('fill', 'currentColor');
-      } else {
-        bookmarkBtn.classList.remove('active');
-        bookmarkBtn.setAttribute('aria-pressed', 'false');
-        bookmarkBtn.setAttribute('title', 'Bu yazıyı daha sonra okumak için kaydet');
-        if (textSpan) textSpan.textContent = 'Kaydet';
-        if (iconSvg) iconSvg.setAttribute('fill', 'none');
-      }
-    }
-
-    bookmarkBtn.addEventListener('click', () => {
-      const list = getBookmarks();
-      const existingIndex = list.findIndex(item => item.slug === slug || item.url === postUrl || (item.id && item.id === slug));
-
-      if (existingIndex !== -1) {
-        list.splice(existingIndex, 1);
-        saveBookmarks(list);
-        updateButtonUI(false);
-      } else {
-        const newBookmark = {
-          id: slug,
-          slug: slug,
-          url: postUrl,
-          title: postTitle,
-          date: postDate,
-          dateFormatted: postDateFormatted,
-          readingTime: readingTime,
-          excerpt: postSubtitle,
-          image: postImage,
-          imageAlt: postImageAlt,
-          savedAt: Date.now()
-        };
-        list.unshift(newBookmark);
-        saveBookmarks(list);
-        updateButtonUI(true);
-      }
-    });
-
-    // Başlangıç durumu
-    updateButtonUI(isBookmarked());
-  }
-
-  // 8. İlgili Yazılar (Related Posts) Öneri Sistemi
+  // 7. İlgili Yazılar (Related Posts) Öneri Sistemi
   function initRelatedPosts() {
     const sectionEl = document.getElementById('related-posts');
     const gridEl = document.getElementById('related-posts-grid');
@@ -839,7 +743,6 @@
     initReadingSettings();
     initThemeControls();
     initFocusModeControls();
-    initBookmarkControls();
     initRelatedPosts();
     initShareButtons();
     initThoughtPulse();

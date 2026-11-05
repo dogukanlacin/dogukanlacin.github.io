@@ -807,68 +807,7 @@ html[data-dl-theme="sepia"] .card-read-link {
 }
 
 /* --------------------------------------------------------------------------
-   7. Kaydedilen Notlar Bölümü (Yer İmleri)
-   -------------------------------------------------------------------------- */
-
-.saved-section {
-  padding: 84px 0 96px;
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.saved-count-badge {
-  padding: 3px 8px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  color: var(--accent-gold);
-  border-radius: 2px;
-}
-
-.saved-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 36px;
-}
-
-.btn-remove-bookmark {
-  background: transparent;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-muted);
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 2px;
-  cursor: pointer;
-}
-
-.btn-remove-bookmark:hover {
-  border-color: #e57373;
-  color: #e57373;
-}
-
-.saved-empty {
-  padding: 64px 24px;
-  text-align: center;
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: 2px;
-}
-
-.saved-empty h3 {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 500;
-  margin: 0 0 8px;
-}
-
-.saved-empty p {
-  color: var(--text-secondary);
-  font-size: 14.5px;
-  margin: 0 0 20px;
-}
-
-/* --------------------------------------------------------------------------
-   8. Yazar Tanıtım Vignette (Ana Sayfa Alt Bölüm)
+   7. Yazar Tanıtım Vignette (Ana Sayfa Alt Bölüm)
    -------------------------------------------------------------------------- */
 
 .author-vignette {
@@ -2399,8 +2338,7 @@ html[data-dl-theme="sepia"] .error-quote {
     font-size: 15.5px;
   }
 
-  .archive-grid,
-  .saved-grid {
+  .archive-grid {
     grid-template-columns: 1fr;
     gap: 28px;
   }

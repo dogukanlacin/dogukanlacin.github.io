@@ -285,149 +285,14 @@
     }
   }
 
-  // ==========================================================================
-  // Kaydedilen Notlar (Bookmark & Saved Posts) Sistemi
-  // ==========================================================================
-  const savedElements = {
-    section: document.getElementById('kaydedilenler'),
-    grid: document.getElementById('saved-grid'),
-    empty: document.getElementById('saved-empty'),
-    badge: document.getElementById('saved-count-badge'),
-    navLink: document.getElementById('nav-saved-link')
-  };
-
-  // Güvenli Kayıt Listesi Okuma
-  function getSavedPosts() {
-    try {
-      const raw = localStorage.getItem('dl_bookmarks');
-      if (!raw) return [];
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  // Kayıttan Çıkarma
-  function removeSavedPost(targetSlug) {
-    try {
-      const list = getSavedPosts();
-      const updated = list.filter(item => item.slug !== targetSlug && item.url !== targetSlug && item.id !== targetSlug);
-      localStorage.setItem('dl_bookmarks', JSON.stringify(updated));
-      renderSavedPosts();
-    } catch (e) {}
-  }
-
-  // Kaydedilen Notlar Bölümünü Ekrana Bas
-  function renderSavedPosts() {
-    if (!savedElements.grid || !savedElements.empty) return;
-
-    const savedPosts = getSavedPosts();
-    const count = savedPosts.length;
-
-    // Rozetleri ve Menü Noktasını Güncelle
-    if (savedElements.badge) {
-      if (count > 0) {
-        savedElements.badge.textContent = `${count} Not`;
-        savedElements.badge.style.display = 'inline-block';
-      } else {
-        savedElements.badge.style.display = 'none';
-      }
-    }
-
-    if (savedElements.navLink) {
-      if (count > 0) {
-        savedElements.navLink.innerHTML = `Kaydedilenler <span class="nav-count-dot" title="${count} kaydedilmiş not">•</span>`;
-      } else {
-        savedElements.navLink.textContent = 'Kaydedilenler';
-      }
-    }
-
-    // Durum 1: Hiç kayıt yoksa boş durum mesajı göster
-    if (count === 0) {
-      savedElements.grid.innerHTML = '';
-      savedElements.grid.style.display = 'none';
-      savedElements.empty.style.display = 'block';
-      return;
-    }
-
-    // Durum 2: Kayıtlar var
-    savedElements.empty.style.display = 'none';
-    savedElements.grid.style.display = 'grid';
-
-    savedElements.grid.innerHTML = savedPosts.map(post => {
-      const title = escapeHTML(post.title || 'Başlıksız Not');
-      const dateFormatted = escapeHTML(post.dateFormatted || formatDate(post.date));
-      const excerpt = escapeHTML(post.excerpt || '');
-      const readingTime = escapeHTML(post.readingTime || '');
-      const url = escapeHTML(post.url || (post.slug ? `${post.slug}.html` : '#'));
-      const slug = escapeHTML(post.slug || post.id || post.url);
-
-      const imageUrl = post.image || post.coverImage;
-      const imageAlt = escapeHTML(post.imageAlt || title);
-      const imageHTML = (imageUrl && typeof imageUrl === 'string' && imageUrl.trim() !== '')
-        ? `<div class="card-media"><img src="${escapeHTML(imageUrl)}" alt="${imageAlt}" loading="lazy"></div>`
-        : '';
-
-      return `
-        <article class="post-card saved-card" data-slug="${slug}">
-          ${imageHTML}
-          <div class="card-content">
-            <div class="card-meta-top">
-              <button type="button" class="btn-remove-bookmark" data-slug="${slug}" aria-label="${title} yazısını kaydedilenlerden çıkar" title="Kaydedilenlerden çıkar">
-                ✕ Kaldır
-              </button>
-            </div>
-            <h3 class="card-title">
-              <a href="${url}">${title}</a>
-            </h3>
-            ${excerpt ? `<p class="card-excerpt">${excerpt}</p>` : ''}
-            <div class="card-footer">
-              <div class="card-meta">
-                ${dateFormatted ? `<time datetime="${escapeHTML(post.date || '')}">${dateFormatted}</time>` : ''}
-                ${dateFormatted && readingTime ? `<span class="meta-dot">·</span>` : ''}
-                ${readingTime ? `<span class="card-reading-time">${readingTime}</span>` : ''}
-              </div>
-              <a class="card-read-link" href="${url}" aria-label="${title} yazısını oku">
-                Yazıyı oku <span>↘</span>
-              </a>
-            </div>
-          </div>
-        </article>
-      `;
-    }).join('');
-
-    // "Kaldır" butonlarına olay dinleyicisi ekle
-    savedElements.grid.querySelectorAll('.btn-remove-bookmark').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const itemSlug = btn.getAttribute('data-slug');
-        removeSavedPost(itemSlug);
-      });
-    });
-  }
-
-  function initSavedPosts() {
-    renderSavedPosts();
-
-    // Başka sekmede yer imi eklendiğinde/çıkarıldığında senkronize et
-    window.addEventListener('storage', (e) => {
-      if (e.key === 'dl_bookmarks') {
-        renderSavedPosts();
-      }
-    });
-  }
-
   // Başlat
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initEvents();
       loadPosts();
-      initSavedPosts();
     });
   } else {
     initEvents();
     loadPosts();
-    initSavedPosts();
   }
 })();
