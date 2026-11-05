@@ -288,20 +288,24 @@ html[data-dl-theme="sepia"] .header-theme-btn:hover {
 }
 
 /* --------------------------------------------------------------------------
-   4. Hero Alanı (Zarif & Geniş Editoryal Yerleşim)
+   4. Hero Alanı (Dengeli Editoryal 2 Sütun Yerleşim)
    -------------------------------------------------------------------------- */
 
 .hero {
   position: relative;
-  padding: 104px 0 114px;
+  padding: 84px 0 96px;
   border-bottom: 1px solid var(--border-subtle);
-  overflow: hidden;
 }
 
-.hero-inner {
-  position: relative;
-  z-index: 2;
-  max-width: 820px;
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 56px;
+  align-items: center;
+}
+
+.hero-content {
+  max-width: 680px;
 }
 
 .eyebrow {
@@ -311,7 +315,7 @@ html[data-dl-theme="sepia"] .header-theme-btn:hover {
   color: var(--accent-gold);
   font-weight: 600;
   text-transform: uppercase;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 html[data-dl-theme="sepia"] .eyebrow {
@@ -320,12 +324,12 @@ html[data-dl-theme="sepia"] .eyebrow {
 
 .hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(42px, 6.8vw, 78px);
-  line-height: 1.12;
+  font-size: clamp(34px, 4.5vw, 56px);
+  line-height: 1.15;
   font-weight: 500;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.025em;
   color: var(--text-primary);
-  margin: 0 0 26px;
+  margin: 0 0 22px;
 }
 
 .hero-title em {
@@ -344,10 +348,10 @@ html[data-dl-theme="sepia"] .hero-title em {
 
 .intro {
   color: var(--text-secondary);
-  font-size: 17.5px;
+  font-size: 16.5px;
   line-height: 1.7;
-  max-width: 640px;
-  margin: 0 0 34px;
+  max-width: 600px;
+  margin: 0 0 32px;
 }
 
 html[data-dl-theme="sepia"] .intro {
@@ -357,60 +361,182 @@ html[data-dl-theme="sepia"] .intro {
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
-.text-link {
+.btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  color: var(--accent-gold);
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: transform var(--transition-fast), color var(--transition-fast);
+  letter-spacing: 0.05em;
+  border: 1px solid var(--text-primary);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
 }
 
-.text-link:hover {
-  color: #cfc1a2;
+.btn-primary:hover {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #111;
+  transform: translateY(-1px);
+}
+
+.btn-primary .btn-arrow {
+  font-size: 14px;
+  transition: transform var(--transition-fast);
+}
+
+.btn-primary:hover .btn-arrow {
+  transform: translate(2px, 2px);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--border-card);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+  background: rgba(255, 255, 255, 0.02);
+  transform: translateY(-1px);
+}
+
+.btn-ghost .btn-arrow {
+  transition: transform var(--transition-fast);
+}
+
+.btn-ghost:hover .btn-arrow {
   transform: translateX(3px);
 }
 
-.hero-about-link {
-  display: inline-flex;
+html[data-dl-theme="sepia"] .btn-primary {
+  background: #262320;
+  color: #f4efe6;
+  border-color: #262320;
+}
+
+html[data-dl-theme="sepia"] .btn-primary:hover {
+  background: #967e58;
+  border-color: #967e58;
+  color: #f4efe6;
+}
+
+html[data-dl-theme="sepia"] .btn-ghost {
+  border-color: #d0c6b4;
+  color: #262320;
+}
+
+html[data-dl-theme="sepia"] .btn-ghost:hover {
+  border-color: #967e58;
+  color: #967e58;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Hero Portre Fotoğraf Alanı */
+.hero-portrait {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.portrait-frame {
+  position: relative;
+  width: 260px;
+  max-width: 100%;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--border-card);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-card);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+}
+
+.portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: contrast(1.03) brightness(0.98);
+  transition: transform 0.6s var(--ease-editorial), filter 0.6s var(--ease-editorial);
+}
+
+.portrait-frame:hover .portrait-img {
+  transform: scale(1.025);
+  filter: contrast(1.06) brightness(1.02);
+}
+
+.portrait-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  color: var(--text-muted);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color var(--transition-fast);
+  justify-content: center;
+  background: var(--bg-card);
+  color: var(--accent-gold);
+  gap: 12px;
 }
 
-.hero-about-link:hover {
-  color: var(--text-primary);
-}
-
-.hero-mark {
-  position: absolute;
-  right: 0;
-  bottom: 20px;
-  color: var(--border-subtle);
+.portrait-monogram {
   font-family: var(--font-serif);
-  font-size: clamp(64px, 11vw, 120px);
+  font-size: 48px;
   font-weight: 700;
-  letter-spacing: -0.04em;
-  user-select: none;
-  pointer-events: none;
-  opacity: 0.45;
+  letter-spacing: 0.08em;
 }
 
-html[data-dl-theme="sepia"] .hero-mark {
-  color: #d8cfbe;
-  opacity: 0.55;
+.portrait-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.portrait-caption-tag {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 4px 10px;
+  background: rgba(17, 17, 17, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--text-secondary);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  border-radius: 2px;
+}
+
+html[data-dl-theme="sepia"] .portrait-frame {
+  border-color: #d5ccba;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+}
+
+html[data-dl-theme="sepia"] .portrait-caption-tag {
+  background: rgba(244, 239, 230, 0.9);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #554e44;
 }
 
 /* --------------------------------------------------------------------------
@@ -2327,7 +2453,26 @@ html[data-dl-theme="sepia"] .error-quote {
   }
 
   .hero {
-    padding: 48px 0 56px;
+    padding: 44px 0 52px;
+  }
+
+  .hero-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: flex-start;
+  }
+
+  .hero-portrait {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .portrait-frame {
+    width: 190px;
+    max-width: 65%;
+    aspect-ratio: 4 / 5;
+    margin: 0 auto;
   }
 
   .hero-title {
@@ -2403,5 +2548,16 @@ html[data-dl-theme="sepia"] .error-quote {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+
+@media (max-width: 960px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr) 220px;
+    gap: 36px;
+  }
+  .portrait-frame {
+    width: 220px;
   }
 }
