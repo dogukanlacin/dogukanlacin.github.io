@@ -461,8 +461,8 @@ html[data-dl-theme="sepia"] .btn-ghost:hover {
 
 .portrait-frame {
   position: relative;
-  width: 120px;
-  max-width: 120px;
+  width: 185px;
+  max-width: 185px;
   aspect-ratio: 4 / 5;
   border: 1px solid var(--border-card);
   border-radius: 4px;
@@ -2469,8 +2469,8 @@ html[data-dl-theme="sepia"] .error-quote {
   }
 
   .portrait-frame {
-    width: 96px;
-    max-width: 96px;
+    width: 140px;
+    max-width: 140px;
     aspect-ratio: 4 / 5;
     margin: 0 auto;
   }
@@ -2558,7 +2558,7 @@ html[data-dl-theme="sepia"] .error-quote {
     gap: 32px;
   }
   .portrait-frame {
-    width: 110px;
-    max-width: 110px;
+    width: 160px;
+    max-width: 160px;
   }
 }
