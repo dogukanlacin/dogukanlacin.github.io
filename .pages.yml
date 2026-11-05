@@ -1,9 +1,11 @@
+# Doğukan'ın Notları — Pages CMS Yapılandırması
+# Resmî Dokümantasyon: https://pagescms.org/docs/configuration/
 
 media:
   input: assets/images/posts
   output: /assets/images/posts
-  rename: safe
   categories: [image]
+  extensions: [jpg, jpeg, png, webp, svg]
 
 content:
   - name: posts
@@ -11,50 +13,60 @@ content:
     type: collection
     path: content/posts
     format: yaml-frontmatter
-    filename: "{slug}.md"
-
+    filename: "{primary}.md"
     view:
       primary: title
       sort: date
       order: desc
-
     fields:
       - name: title
         label: Yazı Başlığı
         type: string
         required: true
+        description: Yazının ana editoryal başlığı
 
       - name: excerpt
-        label: Kısa Açıklama
+        label: Kısa Açıklama / Alt Başlık
         type: text
         required: true
+        description: Yazının edebi özeti veya giriş cümlesi
 
       - name: date
         label: Yayın Tarihi
         type: date
         required: true
+        description: Yazının okuyucuya görüneceği tarih (YYYY-AA-GG)
 
       - name: coverImage
         label: Kapak Görseli
         type: image
+        description: 16:9 yatay sinematik kapak görseli (İsteğe bağlı)
 
       - name: imageAlt
-        label: Görsel Açıklaması
+        label: Kapak Görseli Betimlemesi (Alt Metni)
         type: string
+        description: Ekran okuyucular ve arama motorları için görsel açıklaması
 
       - name: featured
         label: Öne Çıkan Yazı
         type: boolean
+        default: false
+        description: Bu yazıyı ana sayfanın en üstünde öne çıkar
 
       - name: seoTitle
         label: SEO Başlığı
         type: string
+        description: Arama motoru ve sosyal paylaşımlar için özel başlık (Boşsa yazı başlığı kullanılır)
 
       - name: seoDescription
         label: SEO Açıklaması
         type: text
+        description: Arama motoru ve sosyal paylaşımlar için özel açıklama (Boşsa kısa açıklama kullanılır)
 
       - name: body
         label: Yazı İçeriği
         type: rich-text
         required: true
+        options:
+          format: markdown
+          switcher: true

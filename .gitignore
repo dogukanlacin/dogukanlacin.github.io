@@ -1,0 +1,7 @@
+# Bağımlılıklar
+node_modules/
+
+# Derleme ve geçici çıktı klasörleri
+_site/
+.DS_Store
+Thumbs.db
