@@ -299,8 +299,8 @@ html[data-dl-theme="sepia"] .header-theme-btn:hover {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 260px;
-  gap: 56px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 52px;
   align-items: center;
 }
 
@@ -461,8 +461,8 @@ html[data-dl-theme="sepia"] .btn-ghost:hover {
 
 .portrait-frame {
   position: relative;
-  width: 260px;
-  max-width: 100%;
+  width: 120px;
+  max-width: 120px;
   aspect-ratio: 4 / 5;
   border: 1px solid var(--border-card);
   border-radius: 4px;
@@ -2469,8 +2469,8 @@ html[data-dl-theme="sepia"] .error-quote {
   }
 
   .portrait-frame {
-    width: 190px;
-    max-width: 65%;
+    width: 96px;
+    max-width: 96px;
     aspect-ratio: 4 / 5;
     margin: 0 auto;
   }
@@ -2554,10 +2554,11 @@ html[data-dl-theme="sepia"] .error-quote {
 
 @media (max-width: 960px) {
   .hero-grid {
-    grid-template-columns: minmax(0, 1fr) 220px;
-    gap: 36px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 32px;
   }
   .portrait-frame {
-    width: 220px;
+    width: 110px;
+    max-width: 110px;
   }
 }
