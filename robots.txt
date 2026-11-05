@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dogukanlacin.github.io/sitemap.xml

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181818"/>
+      <stop offset="100%" stop-color="#0e0e0e"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bgGrad)"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="12.5" fill="none" stroke="#2c2c2c" stroke-width="1.5"/>
+  <text x="32" y="37" font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" fill="#b7a98a" text-anchor="middle" dominant-baseline="middle" letter-spacing="-0.02em">DL<tspan fill="#e5dbc7">.</tspan></text>
+</svg>
