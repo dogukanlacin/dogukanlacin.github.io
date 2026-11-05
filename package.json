@@ -1,0 +1,16 @@
+{
+  "name": "dogukanin-notlari",
+  "version": "1.0.0",
+  "description": "Doğukan'ın Notları — Kişisel Yazı Alanı",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-posts.js",
+    "build:site": "node scripts/build-posts.js --dest=_site",
+    "build:rss": "node scripts/build-rss.js",
+    "build:sitemap": "node scripts/build-sitemap.js",
+    "new-post": "node scripts/new-post.js"
+  },
+  "dependencies": {
+    "marked": "^15.0.7"
+  }
+}

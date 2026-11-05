@@ -2,7 +2,6 @@
  * Doğukan'ın Notları — Dinamik Yazı Arşivi Sistemi
  * - posts.json veri kaynağı
  * - Anlık arama (Türkçe karakter duyarlı)
- * - Kategori filtreleme
  * - Tarihe göre sıralama (En yeni / En eski)
  * - Öne çıkan yazı (featured) desteği
  * - Boş durum & hata yönetimi
@@ -12,7 +11,6 @@
   'use strict';
 
   let allPosts = [];
-  let currentCategory = 'all';
   let searchQuery = '';
   let currentSort = 'newest';
 
@@ -22,7 +20,6 @@
     searchInput: document.getElementById('archive-search'),
     searchClear: document.getElementById('search-clear'),
     sortSelect: document.getElementById('archive-sort'),
-    categoryPills: document.querySelectorAll('.category-pills .filter-pill'),
     featuredArea: document.getElementById('archive-featured'),
     gridArea: document.getElementById('archive-grid'),
     emptyArea: document.getElementById('archive-empty'),
@@ -81,7 +78,6 @@
   // Yazı Kartı Şablonu Oluşturucu
   function createPostCardHTML(post, isFeatured = false) {
     const title = escapeHTML(post.title || 'Başlıksız Not');
-    const category = escapeHTML(post.category || 'Genel');
     const dateFormatted = escapeHTML(formatDate(post.date));
     const excerpt = escapeHTML(post.excerpt || '');
     const readingTime = escapeHTML(post.readingTime || '');
@@ -95,17 +91,14 @@
       : '';
 
     const featuredBadge = isFeatured
-      ? `<span class="featured-badge"><span class="badge-icon">✳</span> ÖNE ÇIKAN NOT</span>`
+      ? `<div class="card-meta-top"><span class="featured-badge"><span class="badge-icon">✳</span> ÖNE ÇIKAN NOT</span></div>`
       : '';
 
     return `
       <article class="post-card ${isFeatured ? 'is-featured' : ''}">
         ${imageHTML}
         <div class="card-content">
-          <div class="card-meta-top">
-            <span class="card-category">${category}</span>
-            ${featuredBadge}
-          </div>
+          ${featuredBadge}
           <h3 class="card-title">
             <a href="${url}">${title}</a>
           </h3>
@@ -129,23 +122,17 @@
   function getFilteredPosts() {
     let result = [...allPosts];
 
-    // 1. Kategori Filtresi
-    if (currentCategory !== 'all') {
-      result = result.filter(p => p.category && p.category.trim() === currentCategory.trim());
-    }
-
-    // 2. Arama Filtresi (Başlık, Açıklama, Kategori)
+    // 1. Arama Filtresi (Başlık, Açıklama)
     if (searchQuery.trim() !== '') {
       const q = normalizeText(searchQuery);
       result = result.filter(p => {
         const titleNorm = normalizeText(p.title);
         const excerptNorm = normalizeText(p.excerpt);
-        const catNorm = normalizeText(p.category);
-        return titleNorm.includes(q) || excerptNorm.includes(q) || catNorm.includes(q);
+        return titleNorm.includes(q) || excerptNorm.includes(q);
       });
     }
 
-    // 3. Sıralama (Tarihe göre)
+    // 2. Sıralama (Tarihe göre)
     result.sort((a, b) => {
       const timeA = a.date ? new Date(a.date).getTime() : 0;
       const timeB = b.date ? new Date(b.date).getTime() : 0;
@@ -184,7 +171,7 @@
 
       elements.emptyArea.style.display = 'block';
       if (elements.emptyTitle) elements.emptyTitle.textContent = 'Aradığın not burada değil.';
-      if (elements.emptyDesc) elements.emptyDesc.textContent = 'Farklı bir arama terimi deneyebilir veya kategori filtrelerini temizleyebilirsiniz.';
+      if (elements.emptyDesc) elements.emptyDesc.textContent = 'Farklı bir arama terimi deneyebilirsiniz.';
       if (elements.resetBtn) elements.resetBtn.style.display = 'inline-block';
       return;
     }
@@ -227,18 +214,11 @@
   // Filtreleri Sıfırlama Fonksiyonu
   function resetFilters() {
     searchQuery = '';
-    currentCategory = 'all';
     currentSort = 'newest';
 
     if (elements.searchInput) elements.searchInput.value = '';
     if (elements.searchClear) elements.searchClear.style.display = 'none';
     if (elements.sortSelect) elements.sortSelect.value = 'newest';
-
-    elements.categoryPills.forEach(pill => {
-      const isAll = pill.getAttribute('data-category') === 'all';
-      pill.classList.toggle('active', isAll);
-      pill.setAttribute('aria-selected', String(isAll));
-    });
 
     renderArchive();
   }
@@ -272,20 +252,6 @@
         renderArchive();
       });
     }
-
-    // Kategori Filtre Butonları
-    elements.categoryPills.forEach(pill => {
-      pill.addEventListener('click', () => {
-        elements.categoryPills.forEach(p => {
-          p.classList.remove('active');
-          p.setAttribute('aria-selected', 'false');
-        });
-        pill.classList.add('active');
-        pill.setAttribute('aria-selected', 'true');
-        currentCategory = pill.getAttribute('data-category') || 'all';
-        renderArchive();
-      });
-    });
 
     // Sıralama Seçimi
     if (elements.sortSelect) {
@@ -391,7 +357,6 @@
 
     savedElements.grid.innerHTML = savedPosts.map(post => {
       const title = escapeHTML(post.title || 'Başlıksız Not');
-      const category = escapeHTML(post.category || 'Genel');
       const dateFormatted = escapeHTML(post.dateFormatted || formatDate(post.date));
       const excerpt = escapeHTML(post.excerpt || '');
       const readingTime = escapeHTML(post.readingTime || '');
@@ -409,7 +374,6 @@
           ${imageHTML}
           <div class="card-content">
             <div class="card-meta-top">
-              <span class="card-category">${category}</span>
               <button type="button" class="btn-remove-bookmark" data-slug="${slug}" aria-label="${title} yazısını kaydedilenlerden çıkar" title="Kaydedilenlerden çıkar">
                 ✕ Kaldır
               </button>

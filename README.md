@@ -24,11 +24,10 @@ node scripts/new-post.js
 
 Bu komutu çalıştırdığınızda betik size sırayla soracaktır:
 1. **Yazı Başlığı:** Başlığı girdiğinizde Türkçe harfler otomatik temizlenerek temiz bir URL (`slug.html`) oluşturulur.
-2. **Kategori Seçimi:** `1: İnsan ve Toplum`, `2: Hukuk ve Adalet`, `3: Denemeler`.
-3. **Kısa Özet / Alt Başlık:** Arşiv kartında ve paylaşımlarda görünecek 1-2 cümlelik edebi özet.
-4. **Yayın Tarihi:** Boş bırakıp Enter'a basarsanız bugünün tarihi otomatik atanır.
-5. **Kapak Görseli:** İsteğe bağlı görsel bağlantısı (yoksa Enter ile geçebilirsiniz).
-6. **Öne Çıkan Not mu?:** `e` (evet) veya `h` (hayır).
+2. **Kısa Özet / Alt Başlık:** Arşiv kartında ve paylaşımlarda görünecek 1-2 cümlelik edebi özet.
+3. **Yayın Tarihi:** Boş bırakıp Enter'a basarsanız bugünün tarihi otomatik atanır.
+4. **Kapak Görseli:** İsteğe bağlı görsel bağlantısı (yoksa Enter ile geçebilirsiniz).
+5. **Öne Çıkan Not mu?:** `e` (evet) veya `h` (hayır).
 
 İşlem tamamlandığında:
 * Yeni HTML dosyanız (`ornek-yazi-adi.html`) tüm etiketleriyle hazır olarak açılır.
@@ -47,7 +46,6 @@ Bu komutu çalıştırdığınızda betik size sırayla soracaktır:
      {
        "title": "Yazının Başlığı",
        "slug": "yazinin-basligi",
-       "category": "İnsan ve Toplum",
        "date": "2026-11-05",
        "excerpt": "Yazının kısa özeti.",
        "readingTime": "3 dk okuma",
@@ -68,5 +66,5 @@ Yazılarınız için yapay zekâ ile üreteceğiniz görseller `assets/images/po
 * **Yazı İçi Görseller:** `assets/images/posts/<slug>-01.webp`, `assets/images/posts/<slug>-02.webp`
 * **Format:** Tüm görseller WebP formatında, metinsiz ve filigransız olmalıdır.
 
-Kategori bazlı yapay zekâ prompt şablonları, sinematik noir estetik ilkeleri ve detaylı rehber için:
+Sinematik noir estetik ilkeleri ve detaylı rehber için:
 👉 **[assets/images/posts/GUIDELINES.md](assets/images/posts/GUIDELINES.md)** dosyasını inceleyebilirsiniz.

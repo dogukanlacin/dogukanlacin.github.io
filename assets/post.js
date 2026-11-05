@@ -548,7 +548,6 @@
 
     // Post kimliği ve meta bilgileri
     const postTitle = document.querySelector('.post-title')?.textContent?.trim() || document.title;
-    const postCategory = document.querySelector('.post-category')?.textContent?.trim() || '';
     const timeEl = document.querySelector('.post-meta time');
     const postDate = timeEl?.getAttribute('datetime') || '';
     const postDateFormatted = timeEl?.textContent?.trim() || '';
@@ -619,7 +618,6 @@
           slug: slug,
           url: postUrl,
           title: postTitle,
-          category: postCategory,
           date: postDate,
           dateFormatted: postDateFormatted,
           readingTime: readingTime,
@@ -681,7 +679,6 @@
 
     // Mevcut sayfanın meta verileri
     const currentTitle = (document.querySelector('.post-title')?.textContent || '').trim();
-    const currentCategory = (document.querySelector('.post-category')?.textContent || '').trim();
     const pathParts = window.location.pathname.split('/');
     let filename = pathParts.pop() || '';
     if (!filename || filename === '/') {
@@ -717,25 +714,9 @@
         const others = posts.filter(p => !isCurrentPost(p));
         if (others.length === 0) return;
 
-        // 1. Adım: Aynı kategorideki yazıları önceliklendir
-        const sameCategory = others.filter(p => {
-          return p.category && currentCategory && p.category.trim().toLowerCase() === currentCategory.toLowerCase();
-        });
-        sameCategory.sort(sortByDate);
-
-        // 2. Adım: 3 öneriye tamamla
-        let recommended = [];
-        if (sameCategory.length >= 3) {
-          recommended = sameCategory.slice(0, 3);
-        } else {
-          recommended = [...sameCategory];
-          const otherCategories = others
-            .filter(p => !sameCategory.some(sc => (sc.slug && sc.slug === p.slug) || (sc.url && sc.url === p.url)))
-            .sort(sortByDate);
-
-          const needed = 3 - recommended.length;
-          recommended = recommended.concat(otherCategories.slice(0, needed));
-        }
+        // En yeni yazılara göre sırala ve ilk 3 yazıyı öner
+        others.sort(sortByDate);
+        const recommended = others.slice(0, 3);
 
         // Öneri bulunamadıysa bölümü gizli tut
         if (recommended.length === 0) return;
@@ -743,7 +724,6 @@
         // Kartları oluştur ve ekrana bas
         gridEl.innerHTML = recommended.map(post => {
           const title = escapeHTML(post.title || 'Başlıksız Not');
-          const category = escapeHTML(post.category || 'Genel');
           const dateFormatted = escapeHTML(formatDate(post.date));
           const excerpt = escapeHTML(post.excerpt || '');
           const readingTime = escapeHTML(post.readingTime || '');
@@ -759,7 +739,6 @@
             <article class="related-card">
               ${imageHTML}
               <div class="card-content">
-                <span class="card-category">${category}</span>
                 <h4 class="card-title">
                   <a href="${url}">${title}</a>
                 </h4>

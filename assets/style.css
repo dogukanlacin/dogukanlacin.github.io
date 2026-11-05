@@ -135,7 +135,6 @@ a {
 }
 
 .editorial,
-.categories,
 .about {
   padding-top: 76px;
   padding-bottom: 80px;
@@ -176,37 +175,8 @@ a {
   margin: 15px 0 8px;
 }
 
-.archive-empty p,
-.category-grid p {
+.archive-empty p {
   color: #999;
-}
-
-.category-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 30px;
-}
-
-.category-grid > div {
-  padding: 26px;
-  border: 1px solid #303030;
-  background: #171717;
-}
-
-.category-grid span {
-  color: #b7a98a;
-  font-size: 10px;
-  letter-spacing: .15em;
-}
-
-.category-grid h3 {
-  font: 500 25px "Playfair Display", serif;
-  margin: 14px 0 5px;
-}
-
-.category-grid p {
-  font-size: 13px;
 }
 
 /* Hakkımda (About) Bölümü */
@@ -354,10 +324,6 @@ a {
     bottom: 30px;
   }
 
-  .category-grid {
-    grid-template-columns: 1fr;
-  }
-
   .about-inner {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -457,16 +423,6 @@ a {
   padding-bottom: 36px;
   border-bottom: 1px solid #282828;
   margin-bottom: 44px;
-}
-
-.post-category {
-  display: inline-block;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #b7a98a;
-  font-weight: 600;
-  margin-bottom: 18px;
 }
 
 .post-title {
@@ -865,41 +821,9 @@ a {
 .archive-filter-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 16px;
-}
-
-.category-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.filter-pill {
-  background: #171717;
-  border: 1px solid #2e2e2e;
-  color: #8c8880;
-  font-family: "DM Sans", sans-serif;
-  font-size: 11.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 7px 14px;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: all 0.2s ease;
-}
-
-.filter-pill:hover {
-  color: #e9e6df;
-  border-color: #444;
-}
-
-.filter-pill.active {
-  background: #202020;
-  color: #b7a98a;
-  border-color: #b7a98a;
-  font-weight: 500;
 }
 
 .archive-sort-wrapper {
@@ -997,18 +921,10 @@ a {
 
 .card-meta-top {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   gap: 12px;
   margin-bottom: 14px;
-}
-
-.card-category {
-  font-size: 10.5px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #b7a98a;
-  font-weight: 600;
 }
 
 .featured-badge {
@@ -1133,18 +1049,9 @@ a {
   }
 
   .archive-filter-row {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    justify-content: flex-end;
     gap: 14px;
-  }
-
-  .category-pills {
-    width: 100%;
-  }
-
-  .filter-pill {
-    font-size: 11px;
-    padding: 6px 12px;
   }
 
   .archive-sort-wrapper {
@@ -1290,7 +1197,6 @@ html[data-dl-theme="sepia"] .topline {
 html[data-dl-theme="sepia"] .site-header,
 html[data-dl-theme="sepia"] .hero,
 html[data-dl-theme="sepia"] .editorial,
-html[data-dl-theme="sepia"] .categories,
 html[data-dl-theme="sepia"] .about,
 html[data-dl-theme="sepia"] .site-footer,
 html[data-dl-theme="sepia"] .post-header,
@@ -1307,7 +1213,6 @@ html[data-dl-theme="sepia"] .author-details h4 {
 }
 
 html[data-dl-theme="sepia"] .brand span,
-html[data-dl-theme="sepia"] .post-category,
 html[data-dl-theme="sepia"] .author-monogram,
 html[data-dl-theme="sepia"] .card-read-link span {
   color: #967e58;
@@ -2122,14 +2027,6 @@ html[data-dl-theme="sepia"] .saved-empty .text-link {
   padding: 20px 22px;
 }
 
-.related-card .card-category {
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #b7a98a;
-  margin-bottom: 8px;
-}
-
 .related-card .card-title {
   font-family: "Playfair Display", serif;
   font-size: 18px;
@@ -2217,10 +2114,6 @@ html[data-dl-theme="sepia"] .related-card:hover {
 html[data-dl-theme="sepia"] .related-card .card-media {
   background: #ded5c2;
   border-bottom-color: #d6ccbe;
-}
-
-html[data-dl-theme="sepia"] .related-card .card-category {
-  color: #967e58;
 }
 
 html[data-dl-theme="sepia"] .related-card .card-title {

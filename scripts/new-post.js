@@ -10,7 +10,7 @@
  * 
  * Kullanım:
  *   İnteraktif: node scripts/new-post.js
- *   Parametreli: node scripts/new-post.js --title="Başlık" --category="Denemeler" --excerpt="Özet"
+ *   Parametreli: node scripts/new-post.js --title="Başlık" --excerpt="Özet"
  */
 
 const fs = require('fs');
@@ -86,7 +86,6 @@ function parseArgs() {
 function createPost(options) {
   const {
     title,
-    category,
     excerpt,
     date = getTodayISO(),
     coverImage = '',
@@ -144,9 +143,6 @@ function createPost(options) {
     .replace(/\[Yazının kısa özeti veya giriş cümlesi buraya gelecek\.\]/g, excerpt || title)
     .replace(/\[Yazının kısa özeti buraya gelecek\.\]/g, excerpt || title)
     .replace(/https:\/\/dogukanlacin\.github\.io\/yazi-adresi\.html/g, fullPostUrl)
-    .replace(/<span class="post-category">\[Kategori Adı\]<\/span>/g, `<span class="post-category">${category}</span>`)
-    .replace(/content="\[Kategori Adı\]"/g, `content="${category}"`)
-    .replace(/"articleSection": "\[Kategori Adı\]"/g, `"articleSection": "${category}"`)
     .replace(/<h1 class="post-title">\[Yazının Başlığı Buraya Gelecek\]<\/h1>/g, `<h1 class="post-title">${title}</h1>`)
     .replace(/<p class="post-subtitle">\[Yazının açılış özeti, edebi alt başlığı veya giriş cümlesi buraya yazılabilir\.\]<\/p>/g, `<p class="post-subtitle">${excerpt || ''}</p>`)
     .replace(/<time datetime="2026-11-05">5 Kasım 2026<\/time>/g, `<time datetime="${date}">${formattedDate}</time>`)
@@ -217,7 +213,6 @@ function createPost(options) {
   const newPostEntry = {
     title,
     slug,
-    category,
     date,
     excerpt: excerpt || '',
     readingTime: '3 dk okuma',
@@ -255,7 +250,6 @@ function createPost(options) {
   console.log('======================================================');
   console.log(` 📄 Dosya:        ${slug}.html`);
   console.log(` 📌 Başlık:       ${title}`);
-  console.log(` 🏷️  Kategori:     ${category}`);
   console.log(` 📅 Tarih:        ${formattedDate} (${date})`);
   console.log(` 🔗 Arşiv Kaydı:  assets/posts.json dosyasına eklendi.`);
   console.log(` 📡 RSS Besleme:  feed.xml güncellendi.`);
@@ -274,12 +268,6 @@ function promptInteractive() {
     output: process.stdout
   });
 
-  const categories = [
-    'İnsan ve Toplum',
-    'Hukuk ve Adalet',
-    'Denemeler'
-  ];
-
   console.log('\n--- DOĞUKAN\'IN NOTLARI — YENİ YAZI EDİTÖRÜ ---');
   console.log('Lütfen aşağıdaki adımları doldurun (İptal etmek için Ctrl+C):\n');
 
@@ -290,34 +278,23 @@ function promptInteractive() {
       return;
     }
 
-    console.log('\n2. Kategori Seçiniz:');
-    categories.forEach((cat, idx) => console.log(`   [${idx + 1}] ${cat}`));
-    rl.question('   Seçiminiz (1/2/3) [1]: ', (catChoice) => {
-      let category = categories[0];
-      const parsedChoice = parseInt(catChoice.trim(), 10);
-      if (parsedChoice >= 1 && parsedChoice <= categories.length) {
-        category = categories[parsedChoice - 1];
-      }
+    rl.question('\n2. Kısa Özet / Alt Başlık: ', (excerpt) => {
+      const today = getTodayISO();
+      rl.question(`\n3. Yayın Tarihi (YYYY-AA-GG) [${today}]: `, (dateInput) => {
+        const date = dateInput.trim() || today;
 
-      rl.question('\n3. Kısa Özet / Alt Başlık: ', (excerpt) => {
-        const today = getTodayISO();
-        rl.question(`\n4. Yayın Tarihi (YYYY-AA-GG) [${today}]: `, (dateInput) => {
-          const date = dateInput.trim() || today;
+        rl.question('\n4. Kapak Görseli Yolu (İsteğe bağlı, boş bırakabilirsiniz): ', (cover) => {
+          rl.question('\n5. Öne Çıkan Not mu? (e/h) [h]: ', (featuredInput) => {
+            const isFeatured = featuredInput.trim().toLowerCase() === 'e';
 
-          rl.question('\n5. Kapak Görseli Yolu (İsteğe bağlı, boş bırakabilirsiniz): ', (cover) => {
-            rl.question('\n6. Öne Çıkan Not mu? (e/h) [h]: ', (featuredInput) => {
-              const isFeatured = featuredInput.trim().toLowerCase() === 'e';
+            rl.close();
 
-              rl.close();
-
-              createPost({
-                title: title.trim(),
-                category,
-                excerpt: excerpt.trim(),
-                date,
-                coverImage: cover.trim(),
-                featured: isFeatured
-              });
+            createPost({
+              title: title.trim(),
+              excerpt: excerpt.trim(),
+              date,
+              coverImage: cover.trim(),
+              featured: isFeatured
             });
           });
         });
@@ -331,7 +308,6 @@ const cliArgs = parseArgs();
 if (cliArgs.title) {
   createPost({
     title: cliArgs.title,
-    category: cliArgs.category || 'İnsan ve Toplum',
     excerpt: cliArgs.excerpt || '',
     date: cliArgs.date || getTodayISO(),
     image: cliArgs.image || cliArgs.cover || '',
