@@ -52,12 +52,18 @@ function generateSitemap() {
 
   const today = getTodayISO();
 
-  // 1. Statik Sayfalar (Ana Sayfa)
+  // 1. Statik Sayfalar (Ana Sayfa ve Hakkımda)
   const staticPagesXml = `  <url>
     <loc>${siteConfig.siteUrl}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>${siteConfig.siteUrl}about.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>`;
 
   // 2. Blog Yazıları Girişleri
@@ -90,7 +96,7 @@ ${staticPagesXml}${postsUrlXml ? '\n' + postsUrlXml : ''}
 `;
 
   fs.writeFileSync(sitemapXmlPath, xmlContent, 'utf8');
-  console.log(`sitemap.xml başarıyla oluşturuldu. Toplam URL: ${posts.length + 1}`);
+  console.log(`sitemap.xml başarıyla oluşturuldu. Toplam URL: ${posts.length + 2}`);
 }
 
 if (require.main === module) {

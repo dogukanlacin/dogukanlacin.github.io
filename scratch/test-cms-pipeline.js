@@ -36,6 +36,9 @@ try {
   // 1. .pages.yml Yapılandırma Doğrulaması
   console.log('1. TEST: .pages.yml Yapılandırma Analizi');
   const pagesYmlContent = fs.readFileSync(path.join(rootDir, '.pages.yml'), 'utf8');
+  assert(pagesYmlContent.includes('actions:'), '.pages.yml actions alanı tanımlı');
+  assert(pagesYmlContent.includes('deploy-site'), 'deploy-site eylemi tanımlı');
+  assert(pagesYmlContent.includes('Siteyi Yayınla'), 'Siteyi Yayınla etiketi mevcut');
   assert(pagesYmlContent.includes('media:'), '.pages.yml media alanı tanımlı');
   assert(pagesYmlContent.includes('assets/images/posts'), 'Görsel yükleme yolu assets/images/posts olarak ayarlanmış');
   assert(pagesYmlContent.includes('content/posts'), 'Koleksiyon yolu content/posts olarak ayarlanmış');
@@ -58,6 +61,8 @@ try {
   assert(workflowContent.includes('pages: write'), 'Gerekli pages: write izni tanımlı');
   assert(workflowContent.includes('id-token: write'), 'Gerekli id-token: write izni tanımlı');
   assert(workflowContent.includes('node scripts/build-posts.js --dest=_site'), 'Derleme komutu doğru parametrelerle çağrılıyor');
+  assert(workflowContent.includes('payload:'), 'workflow_dispatch payload girdisi tanımlı');
+  assert(workflowContent.includes('branches: ["main"]'), 'Yalnızca gerçek varsayılan dal (main) dinleniyor');
 
   // 3. Örnek Markdown Yazı Oluşturma
   console.log('\n3. TEST: Örnek Markdown Yazı Oluşturma ve Derleme');

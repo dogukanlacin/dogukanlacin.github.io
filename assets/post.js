@@ -340,6 +340,15 @@
       setTheme(isSepia ? 'noir' : 'sepia');
     });
 
+    if (window.MutationObserver) {
+      const observer = new MutationObserver(() => {
+        const isSepia = document.documentElement.getAttribute('data-dl-theme') === 'sepia';
+        themeBtn.classList.toggle('active', isSepia);
+        themeBtn.setAttribute('aria-pressed', String(isSepia));
+      });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-dl-theme'] });
+    }
+
     setTheme(savedTheme);
   }
 
