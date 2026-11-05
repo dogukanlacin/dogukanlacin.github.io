@@ -1,6 +1,16 @@
 # Doğukan'ın Notları — Pages CMS Yapılandırması
 # Resmî Dokümantasyon: https://pagescms.org/docs/configuration/
 
+actions:
+  - name: deploy-site
+    label: "Siteyi Yayınla"
+    workflow: "publish.yml"
+    ref: "current"
+    confirm:
+      title: "Site Canlıya Alınsın mı?"
+      message: "Blog yazıları derlenecek ve GitHub Pages üzerinde yayımlanacaktır."
+      button: "Yayınla"
+
 media:
   input: assets/images/posts
   output: /assets/images/posts
