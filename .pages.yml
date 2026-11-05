@@ -1,0 +1,60 @@
+
+media:
+  input: assets/images/posts
+  output: /assets/images/posts
+  rename: safe
+  categories: [image]
+
+content:
+  - name: posts
+    label: Blog Yazıları
+    type: collection
+    path: content/posts
+    format: yaml-frontmatter
+    filename: "{slug}.md"
+
+    view:
+      primary: title
+      sort: date
+      order: desc
+
+    fields:
+      - name: title
+        label: Yazı Başlığı
+        type: string
+        required: true
+
+      - name: excerpt
+        label: Kısa Açıklama
+        type: text
+        required: true
+
+      - name: date
+        label: Yayın Tarihi
+        type: date
+        required: true
+
+      - name: coverImage
+        label: Kapak Görseli
+        type: image
+
+      - name: imageAlt
+        label: Görsel Açıklaması
+        type: string
+
+      - name: featured
+        label: Öne Çıkan Yazı
+        type: boolean
+
+      - name: seoTitle
+        label: SEO Başlığı
+        type: string
+
+      - name: seoDescription
+        label: SEO Açıklaması
+        type: text
+
+      - name: body
+        label: Yazı İçeriği
+        type: rich-text
+        required: true
