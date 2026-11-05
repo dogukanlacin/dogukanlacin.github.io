@@ -1,0 +1,66 @@
+name: Doğukan'ın Notları — Otomatik Yayınlama
+
+# Bu iş akışı:
+# 1. Pages CMS "Siteyi Yayınla" butonuyla veya "main" dalına push yapıldığında tetiklenir.
+# 2. Markdown yazılarını editoryal HTML şablonuna dönüştürür.
+# 3. Arşiv verilerini (posts.json), RSS beslemesini (feed.xml) ve Site Haritasını (sitemap.xml) günceller.
+# 4. Üretilen siteyi "_site" klasöründe toplar ve resmî GitHub Pages Actions ile canlıya alır.
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: "Pages CMS payload as JSON"
+        required: true
+        type: string
+        default: "{}"
+
+# GitHub Pages dağıtımı için gerekli asgari izinler
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Aynı anda yalnızca tek bir dağıtım çalıştırarak çakışmaları önle
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # 1. Aşama: İçerik Derleme ve Paketleme
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Depoyu Çalışma Ortamına Al (Checkout)
+        uses: actions/checkout@v4
+
+      - name: Node.js Çalışma Ortamını Hazırla
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Bağımlılıkları Güvenli Şekilde Kur
+        run: npm ci
+
+      - name: Markdown İçeriklerini Derle ve Dağıtım Klasörünü Hazırla
+        run: node scripts/build-posts.js --dest=_site
+
+      - name: GitHub Pages İçin Dağıtım Paketini (Artifact) Yükle
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+  # 2. Aşama: Canlıya Alma (Deployment)
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: GitHub Pages Üzerinde Yayına Al
+        id: deployment
+        uses: actions/deploy-pages@v4
