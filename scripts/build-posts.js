@@ -205,11 +205,7 @@ function renderMarkdown(markdownText) {
 
     let html = marked.parse(markdownText);
 
-    // Açılış paragrafına editoryal "lead" sınıfı ekle (eğer henüz yoksa)
-    const firstPIndex = html.indexOf('<p>');
-    if (firstPIndex !== -1 && !html.includes('class="lead"')) {
-      html = html.replace('<p>', '<p class="lead">');
-    }
+    // Tüm paragraflar eşit ve tutarlı tipografiyle işlenir
 
     return html;
   }
@@ -236,8 +232,7 @@ function renderMarkdown(markdownText) {
     if (p.startsWith('<h') || p.startsWith('<blockquote') || p.startsWith('<figure')) {
       formatted += `${p}\n\n`;
     } else {
-      const cls = idx === 0 ? ' class="lead"' : '';
-      formatted += `<p${cls}>${p}</p>\n\n`;
+      formatted += `<p>${p}</p>\n\n`;
     }
   });
 

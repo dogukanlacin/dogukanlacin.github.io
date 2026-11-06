@@ -109,7 +109,7 @@ Sonuç olarak, yazmak ve düşünmek birbirini tamamlayan iki sessiz yolculuktur
   assert(htmlContent.includes('<title>Sessizliğin İçindeki Düşünce — Felsefi Notlar — Doğukan&#39;ın Notları</title>') || htmlContent.includes('<title>Sessizliğin İçindeki Düşünce — Felsefi Notlar — Doğukan\'ın Notları</title>'), 'SEO başlığı doğru uygulandı');
   assert(htmlContent.includes('<h1 class="post-title">Sessizliğin İçindeki Düşünce</h1>'), 'Yazı başlığı doğru');
   assert(htmlContent.includes('<p class="post-subtitle">Bazen en derin yanıtlar, en sessiz anlarda yankılanır.</p>'), 'Alt başlık doğru');
-  assert(htmlContent.includes('<p class="lead">Zihnimiz çoğu zaman'), 'İlk paragrafa editoryal lead sınıfı uygulandı');
+  assert(htmlContent.includes('<p>Zihnimiz çoğu zaman'), 'İlk paragraf doğal ve eşit tipografiyle üretildi');
   assert(htmlContent.includes('<h2>İlk Yankı</h2>'), 'H2 ara başlığı doğru üretildi');
   assert(htmlContent.includes('<blockquote>'), 'Alıntı bloğu (blockquote) doğru üretildi');
   assert(htmlContent.includes('<figure class="post-cover">'), 'Kapak görseli figure yapısıyla eklendi');
@@ -123,12 +123,12 @@ Sonuç olarak, yazmak ve düşünmek birbirini tamamlayan iki sessiz yolculuktur
   // 6. assets/posts.json Doğrulaması
   console.log('\n6. TEST: assets/posts.json Doğrulaması');
   const postsJsonData = JSON.parse(fs.readFileSync(postsJsonPath, 'utf8'));
-  assert(Array.isArray(postsJsonData) && postsJsonData.length === 1, 'posts.json dizisi 1 adet kayıt içeriyor');
-  const postEntry = postsJsonData[0];
-  assert(postEntry.title === 'Sessizliğin İçindeki Düşünce', 'Kayıt başlığı doğru');
-  assert(postEntry.slug === 'sessizligin-icindeki-dusunce', 'Slug doğru üretilmiş');
-  assert(postEntry.featured === true, 'Öne çıkan (featured) bayrağı doğru');
-  assert(postEntry.url === 'sessizligin-icindeki-dusunce.html', 'URL doğru');
+  const postEntry = postsJsonData.find(p => p.slug === 'sessizligin-icindeki-dusunce');
+  assert(Array.isArray(postsJsonData) && postEntry, 'posts.json dizisi yeni yazıyı içeriyor');
+  assert(postEntry && postEntry.title === 'Sessizliğin İçindeki Düşünce', 'Kayıt başlığı doğru');
+  assert(postEntry && postEntry.slug === 'sessizligin-icindeki-dusunce', 'Slug doğru üretilmiş');
+  assert(postEntry && postEntry.featured === true, 'Öne çıkan (featured) bayrağı doğru');
+  assert(postEntry && postEntry.url === 'sessizligin-icindeki-dusunce.html', 'URL doğru');
 
   // 7. RSS ve Sitemap Doğrulaması
   console.log('\n7. TEST: RSS (feed.xml) ve Sitemap (sitemap.xml) Doğrulaması');

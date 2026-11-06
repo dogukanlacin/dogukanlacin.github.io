@@ -1434,10 +1434,10 @@ html[data-dl-theme="sepia"] .about-prose blockquote {
 }
 
 .post-body p.lead {
-  font-size: 20px;
-  line-height: 1.78;
-  color: var(--text-primary);
-  font-weight: 400;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  font-weight: inherit;
 }
 
 .post-body h2 {
