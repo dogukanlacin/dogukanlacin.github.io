@@ -471,6 +471,38 @@
       });
     });
 
+        // E2. Instagram Paylaş (Bağlantıyı kopyalar ve Instagram'ı açar / kullanıcıya bildirir)
+    const instagramBtns = document.querySelectorAll('.share-instagram');
+    instagramBtns.forEach((btn) => {
+      const textSpan = btn.querySelector('.share-btn-text') || btn;
+      const originalText = textSpan.textContent;
+
+      btn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        try {
+          const isCopied = await copyToClipboard(shareUrl);
+          if (btn._instaTimeout) {
+            clearTimeout(btn._instaTimeout);
+          }
+          btn.classList.add('copied');
+          textSpan.textContent = 'Kopyalandı ✓';
+          announceLiveRegion('Yazı bağlantısı kopyalandı. Instagram açılıyor...');
+
+          setTimeout(() => {
+            window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+          }, 350);
+
+          btn._instaTimeout = setTimeout(() => {
+            btn.classList.remove('copied');
+            textSpan.textContent = originalText;
+            btn._instaTimeout = null;
+          }, 2500);
+        } catch (err) {
+          window.open('https://www.instagram.com/', '_blank', 'noopener,noreferrer');
+        }
+      });
+    });
+
     // F. Bağlantıyı Kopyalama (Modern Clipboard API + Dayanıklı Fallback + Çift Tıklama Koruması)
     function copyToClipboard(text) {
       if (navigator.clipboard && window.isSecureContext) {
