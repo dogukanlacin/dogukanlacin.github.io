@@ -1,6 +1,5 @@
 ---
 title: Herkes Arkadaşımız, Peki Kim Gerçekten Dostumuz?
-excerpt: ÇOK ARKADAŞIMIZ VAR, PEKİ KAÇ GERÇEK DOSTUMUZ VAR?
 date: 2026-11-06
 coverImage: /assets/images/posts/Gemini_Generated_Image_a2gtzta2gtzta2gt.jpg
 imageAlt: Herkes Arkadaşımız, Peki Kim Gerçekten Dostumuz?
