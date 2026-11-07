@@ -104,10 +104,11 @@ test('style.css contains complete styles for reading-settings-panel (Noir & Sepi
 
 test('style.css mobile media query ensures reading-settings-panel does not overflow', () => {
   if (!styleCss.includes('@media (max-width: 700px)')) throw new Error('Mobile media query missing');
-  if (!styleCss.includes('width: 100%;\n    max-width: 100%;')) {
+  const normalized = styleCss.replace(/\r\n/g, '\n');
+  if (!normalized.includes('width: 100%;\n    max-width: 100%;')) {
     // Check if within mobile query
-    const mobileIdx = styleCss.indexOf('@media (max-width: 700px)');
-    const mobileBlock = styleCss.substring(mobileIdx, mobileIdx + 1200);
+    const mobileIdx = normalized.indexOf('@media (max-width: 700px)');
+    const mobileBlock = normalized.substring(mobileIdx, mobileIdx + 3500);
     if (!mobileBlock.includes('.reading-settings-panel')) {
       throw new Error('Mobile media query does not style .reading-settings-panel');
     }

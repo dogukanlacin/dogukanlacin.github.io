@@ -10,7 +10,7 @@
   <meta name="description" content="ÇOK ARKADAŞIMIZ VAR, PEKİ KAÇ GERÇEK DOSTUMUZ VAR?">
   <meta name="author" content="Doğukan Laçin">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <link rel="canonical" href="https://dogukanlacin.github.io/herkes-arkadasimiz-peki-kim-gercekten-dostumuz.html">
+  <link rel="canonical" href="https://dogukanlacin.github.io/herkes-arkadasimiz-peki-kim-gercekten-dostumuz">
 
   <!-- Favicon & Mobil İkonlar -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -26,7 +26,7 @@
   <meta property="og:locale" content="tr_TR">
   <meta property="og:title" content="Herkes Arkadaşımız, Peki Kim Gerçekten Dostumuz? — Doğukan&#39;ın Notları">
   <meta property="og:description" content="ÇOK ARKADAŞIMIZ VAR, PEKİ KAÇ GERÇEK DOSTUMUZ VAR?">
-  <meta property="og:url" content="https://dogukanlacin.github.io/herkes-arkadasimiz-peki-kim-gercekten-dostumuz.html">
+  <meta property="og:url" content="https://dogukanlacin.github.io/herkes-arkadasimiz-peki-kim-gercekten-dostumuz">
   <!-- Paylaşım Görseli (Yazıya özel görsel varsa güncelleyin; yoksa varsayılan marka görseli kullanılır) -->
   <meta property="og:image" content="https://dogukanlacin.github.io/assets/images/posts/Gemini_Generated_Image_a2gtzta2gtzta2gt.jpg">
   <meta property="og:image:width" content="1200">
@@ -52,7 +52,7 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://dogukanlacin.github.io/herkes-arkadasimiz-peki-kim-gercekten-dostumuz.html"
+      "@id": "https://dogukanlacin.github.io/herkes-arkadasimiz-peki-kim-gercekten-dostumuz"
     },
     "headline": "Herkes Arkadaşımız, Peki Kim Gerçekten Dostumuz?",
     "description": "ÇOK ARKADAŞIMIZ VAR, PEKİ KAÇ GERÇEK DOSTUMUZ VAR?",
@@ -79,9 +79,20 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Okuma Tercihlerini Titreşimsiz (FOUC Önleyici) Erken Yükleme -->
+  <!-- Okuma Tercihlerini Titreşimsiz (FOUC Önleyici) & Temiz URL Erken Yükleme -->
   <script>
     (function () {
+      try {
+        var p = window.location.pathname;
+        if (p.endsWith('/index.html')) {
+          var clean = p.slice(0, -10) || '/';
+          window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
+        } else if (p.endsWith('.html')) {
+          var clean = p.slice(0, -5);
+          window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
+        }
+      } catch (e) {}
+
       try {
         var t = localStorage.getItem('dl_theme');
         if (t === 'sepia') document.documentElement.setAttribute('data-dl-theme', 'sepia');
@@ -122,11 +133,11 @@
 
   <!-- Site Başlığı & Menü -->
   <header class="site-header wrap">
-    <a class="brand" href="index.html">DOĞUKAN'IN NOTLARI<span>.</span></a>
+    <a class="brand" href="./">DOĞUKAN'IN NOTLARI<span>.</span></a>
     <nav aria-label="Ana menü">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="index.html#arsiv">Yazılar</a>
-      <a href="about.html">Hakkımda</a>
+      <a href="./">Ana Sayfa</a>
+      <a href="./#arsiv">Yazılar</a>
+      <a href="about">Hakkımda</a>
     </nav>
     <div class="header-actions">
       <button type="button" id="header-theme-toggle" class="header-theme-btn" aria-label="Temayı değiştir (Noir / Sepia)" title="Tema Değiştir (Noir / Sepia)">
@@ -148,7 +159,7 @@
 
       <!-- Geri Dönüş Butonu -->
       <nav class="post-back-nav" aria-label="Gezinme">
-        <a class="back-link" href="index.html#arsiv">
+        <a class="back-link" href="./#arsiv">
           <span>←</span> Yazı Arşivine Dön
         </a>
       </nav>
@@ -390,15 +401,15 @@
             </svg>
             <span class="share-btn-text">Paylaş</span>
           </button>
-          <a href="https://twitter.com/intent/tweet?text=Herkes%20Arkada%C5%9F%C4%B1m%C4%B1z%2C%20Peki%20Kim%20Ger%C3%A7ekten%20Dostumuz%3F&amp;url=https%3A%2F%2Fdogukanlacin.github.io%2Fherkes-arkadasimiz-peki-kim-gercekten-dostumuz.html" class="share-btn share-twitter" target="_blank" rel="noopener noreferrer" aria-label="X'te Paylaş (yeni pencere)" title="X'te Paylaş">
+          <a href="https://twitter.com/intent/tweet?text=Herkes%20Arkada%C5%9F%C4%B1m%C4%B1z%2C%20Peki%20Kim%20Ger%C3%A7ekten%20Dostumuz%3F&amp;url=https%3A%2F%2Fdogukanlacin.github.io%2Fherkes-arkadasimiz-peki-kim-gercekten-dostumuz" class="share-btn share-twitter" target="_blank" rel="noopener noreferrer" aria-label="X'te Paylaş (yeni pencere)" title="X'te Paylaş">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             <span class="share-btn-text">X (Twitter)</span>
           </a>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fdogukanlacin.github.io%2Fherkes-arkadasimiz-peki-kim-gercekten-dostumuz.html" class="share-btn share-linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn'de Paylaş (yeni pencere)" title="LinkedIn'de Paylaş">
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fdogukanlacin.github.io%2Fherkes-arkadasimiz-peki-kim-gercekten-dostumuz" class="share-btn share-linkedin" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn'de Paylaş (yeni pencere)" title="LinkedIn'de Paylaş">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.53 1.53 0 1 0-.01-3.06 1.53 1.53 0 0 0 .01 3.06m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
             <span class="share-btn-text">LinkedIn</span>
           </a>
-          <a href="https://api.whatsapp.com/send?text=Herkes%20Arkada%C5%9F%C4%B1m%C4%B1z%2C%20Peki%20Kim%20Ger%C3%A7ekten%20Dostumuz%3F%20%E2%80%94%20https%3A%2F%2Fdogukanlacin.github.io%2Fherkes-arkadasimiz-peki-kim-gercekten-dostumuz.html" class="share-btn share-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp'ta Paylaş (yeni pencere)" title="WhatsApp'ta Paylaş">
+          <a href="https://api.whatsapp.com/send?text=Herkes%20Arkada%C5%9F%C4%B1m%C4%B1z%2C%20Peki%20Kim%20Ger%C3%A7ekten%20Dostumuz%3F%20%E2%80%94%20https%3A%2F%2Fdogukanlacin.github.io%2Fherkes-arkadasimiz-peki-kim-gercekten-dostumuz" class="share-btn share-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp'ta Paylaş (yeni pencere)" title="WhatsApp'ta Paylaş">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.24 8.24-1.42 0-2.82-.37-4.05-1.08l-.29-.17-3.12.82.83-3.04-.19-.3a8.16 8.16 0 0 1-1.25-4.47c0-4.54 3.7-8.24 8.24-8.24z"/></svg>
             <span class="share-btn-text">WhatsApp</span>
           </a>
@@ -432,9 +443,9 @@
               <span class="author-badge">Yazar</span>
               <span class="author-site">Doğukan'ın Notları</span>
             </div>
-            <h4 class="author-name"><a href="about.html">Doğukan Laçin</a></h4>
+            <h4 class="author-name"><a href="about">Doğukan Laçin</a></h4>
             <p>İnsanı, toplumu, hayatı ve zihnin gözden kaçan ayrıntılarını sorgulayan kişisel bir yazı alanı.</p>
-            <a href="about.html" class="author-about-link">Yazar hakkında daha fazlası <span>→</span></a>
+            <a href="about" class="author-about-link">Yazar hakkında daha fazlası <span>→</span></a>
           </div>
         </div>
 
@@ -451,7 +462,7 @@
 
         <!-- Alt Gezinme -->
         <div class="post-bottom-nav">
-          <a class="back-to-archive" href="index.html#arsiv">
+          <a class="back-to-archive" href="./#arsiv">
             <span>←</span> Yazı Arşivine Dön
           </a>
           <a class="back-to-top" href="#">
@@ -466,13 +477,13 @@
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <div class="footer-top">
-        <a class="brand" href="index.html">DOĞUKAN'IN NOTLARI<span>.</span></a>
+        <a class="brand" href="./">DOĞUKAN'IN NOTLARI<span>.</span></a>
         <p class="footer-tagline">Düşüncenin kendine ait yeri.</p>
       </div>
       <div class="footer-nav">
-        <a href="index.html">Ana Sayfa</a>
-        <a href="index.html#arsiv">Yazılar</a>
-        <a href="about.html">Hakkımda</a>
+        <a href="./">Ana Sayfa</a>
+        <a href="./#arsiv">Yazılar</a>
+        <a href="about">Hakkımda</a>
         <a href="feed.xml" target="_blank" rel="alternate" type="application/rss+xml" class="footer-rss-link">
           <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
           RSS

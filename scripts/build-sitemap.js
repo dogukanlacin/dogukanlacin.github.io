@@ -60,7 +60,7 @@ function generateSitemap() {
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>${siteConfig.siteUrl}about.html</loc>
+    <loc>${siteConfig.siteUrl}about</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -72,9 +72,9 @@ function generateSitemap() {
     if (post.url && post.url.startsWith('http')) {
       postUrl = post.url;
     } else if (post.url) {
-      postUrl = `${siteConfig.siteUrl}${post.url.replace(/^\//, '')}`;
+      postUrl = `${siteConfig.siteUrl}${post.url.replace(/^\//, '').replace(/\.html$/, '')}`;
     } else if (post.slug) {
-      postUrl = `${siteConfig.siteUrl}${post.slug}.html`;
+      postUrl = `${siteConfig.siteUrl}${post.slug}`;
     } else {
       return '';
     }

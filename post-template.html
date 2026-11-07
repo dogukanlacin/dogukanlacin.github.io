@@ -10,7 +10,7 @@
   <meta name="description" content="[Yazının kısa özeti veya giriş cümlesi buraya gelecek.]">
   <meta name="author" content="Doğukan Laçin">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <link rel="canonical" href="https://dogukanlacin.github.io/yazi-adresi.html">
+  <link rel="canonical" href="https://dogukanlacin.github.io/yazi-adresi">
 
   <!-- Favicon & Mobil İkonlar -->
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -26,7 +26,7 @@
   <meta property="og:locale" content="tr_TR">
   <meta property="og:title" content="[Yazı Başlığı] — Doğukan'ın Notları">
   <meta property="og:description" content="[Yazının kısa özeti buraya gelecek.]">
-  <meta property="og:url" content="https://dogukanlacin.github.io/yazi-adresi.html">
+  <meta property="og:url" content="https://dogukanlacin.github.io/yazi-adresi">
   <!-- Paylaşım Görseli (Yazıya özel görsel varsa güncelleyin; yoksa varsayılan marka görseli kullanılır) -->
   <meta property="og:image" content="https://dogukanlacin.github.io/assets/og-image.png">
   <meta property="og:image:width" content="1200">
@@ -52,7 +52,7 @@
     "@type": "BlogPosting",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": "https://dogukanlacin.github.io/yazi-adresi.html"
+      "@id": "https://dogukanlacin.github.io/yazi-adresi"
     },
     "headline": "[Yazı Başlığı]",
     "description": "[Yazının kısa özeti veya giriş cümlesi buraya gelecek.]",
@@ -79,9 +79,20 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
 
-  <!-- Okuma Tercihlerini Titreşimsiz (FOUC Önleyici) Erken Yükleme -->
+  <!-- Okuma Tercihlerini Titreşimsiz (FOUC Önleyici) & Temiz URL Erken Yükleme -->
   <script>
     (function () {
+      try {
+        var p = window.location.pathname;
+        if (p.endsWith('/index.html')) {
+          var clean = p.slice(0, -10) || '/';
+          window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
+        } else if (p.endsWith('.html')) {
+          var clean = p.slice(0, -5);
+          window.history.replaceState(null, '', clean + window.location.search + window.location.hash);
+        }
+      } catch (e) {}
+
       try {
         var t = localStorage.getItem('dl_theme');
         if (t === 'sepia') document.documentElement.setAttribute('data-dl-theme', 'sepia');
@@ -122,11 +133,11 @@
 
   <!-- Site Başlığı & Menü -->
   <header class="site-header wrap">
-    <a class="brand" href="index.html">DOĞUKAN'IN NOTLARI<span>.</span></a>
+    <a class="brand" href="./">DOĞUKAN'IN NOTLARI<span>.</span></a>
     <nav aria-label="Ana menü">
-      <a href="index.html">Ana Sayfa</a>
-      <a href="index.html#arsiv">Yazılar</a>
-      <a href="about.html">Hakkımda</a>
+      <a href="./">Ana Sayfa</a>
+      <a href="./#arsiv">Yazılar</a>
+      <a href="about">Hakkımda</a>
     </nav>
     <div class="header-actions">
       <button type="button" id="header-theme-toggle" class="header-theme-btn" aria-label="Temayı değiştir (Noir / Sepia)" title="Tema Değiştir (Noir / Sepia)">
@@ -148,7 +159,7 @@
 
       <!-- Geri Dönüş Butonu -->
       <nav class="post-back-nav" aria-label="Gezinme">
-        <a class="back-link" href="index.html#arsiv">
+        <a class="back-link" href="./#arsiv">
           <span>←</span> Yazı Arşivine Dön
         </a>
       </nav>
@@ -395,9 +406,9 @@
               <span class="author-badge">Yazar</span>
               <span class="author-site">Doğukan'ın Notları</span>
             </div>
-            <h4 class="author-name"><a href="about.html">Doğukan Laçin</a></h4>
+            <h4 class="author-name"><a href="about">Doğukan Laçin</a></h4>
             <p>İnsanı, toplumu, hayatı ve zihnin gözden kaçan ayrıntılarını sorgulayan kişisel bir yazı alanı.</p>
-            <a href="about.html" class="author-about-link">Yazar hakkında daha fazlası <span>→</span></a>
+            <a href="about" class="author-about-link">Yazar hakkında daha fazlası <span>→</span></a>
           </div>
         </div>
 
@@ -414,7 +425,7 @@
 
         <!-- Alt Gezinme -->
         <div class="post-bottom-nav">
-          <a class="back-to-archive" href="index.html#arsiv">
+          <a class="back-to-archive" href="./#arsiv">
             <span>←</span> Yazı Arşivine Dön
           </a>
           <a class="back-to-top" href="#">
@@ -429,13 +440,13 @@
   <footer class="site-footer">
     <div class="wrap footer-inner">
       <div class="footer-top">
-        <a class="brand" href="index.html">DOĞUKAN'IN NOTLARI<span>.</span></a>
+        <a class="brand" href="./">DOĞUKAN'IN NOTLARI<span>.</span></a>
         <p class="footer-tagline">Düşüncenin kendine ait yeri.</p>
       </div>
       <div class="footer-nav">
-        <a href="index.html">Ana Sayfa</a>
-        <a href="index.html#arsiv">Yazılar</a>
-        <a href="about.html">Hakkımda</a>
+        <a href="./">Ana Sayfa</a>
+        <a href="./#arsiv">Yazılar</a>
+        <a href="about">Hakkımda</a>
         <a href="feed.xml" target="_blank" rel="alternate" type="application/rss+xml" class="footer-rss-link">
           <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true"><path fill="currentColor" d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
           RSS

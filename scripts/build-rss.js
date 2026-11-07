@@ -70,8 +70,8 @@ function generateRss() {
 
   const itemsXml = posts.map(post => {
     const postUrl = post.url
-      ? (post.url.startsWith('http') ? post.url : siteConfig.siteUrl + post.url.replace(/^\//, ''))
-      : (post.slug ? `${siteConfig.siteUrl}${post.slug}.html` : siteConfig.siteUrl);
+      ? (post.url.startsWith('http') ? post.url.replace(/\.html$/, '') : siteConfig.siteUrl + post.url.replace(/^\//, '').replace(/\.html$/, ''))
+      : (post.slug ? `${siteConfig.siteUrl}${post.slug}` : siteConfig.siteUrl);
 
     const title = post.title || 'Başlıksız';
     const excerpt = post.excerpt || '';

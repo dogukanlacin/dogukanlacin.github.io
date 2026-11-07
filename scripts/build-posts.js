@@ -331,7 +331,7 @@ function buildAllPosts() {
     const seoTitle = data.seoTitle || title;
     const seoDescription = data.seoDescription || excerpt;
 
-    const fullPostUrl = `${siteConfig.siteUrl}${slug}.html`;
+    const fullPostUrl = `${siteConfig.siteUrl}${slug}`;
     const readingTime = calculateReadingTime(body);
 
     // Markdown gövdesini HTML'e çevir
@@ -354,7 +354,7 @@ function buildAllPosts() {
       .replace(/\[Yazı Başlığı\]/g, escapeHtml(title))
       .replace(/\[Yazının kısa özeti veya giriş cümlesi buraya gelecek\.\]/g, escapeHtml(seoDescription || excerpt || title))
       .replace(/\[Yazının kısa özeti buraya gelecek\.\]/g, escapeHtml(seoDescription || excerpt || title))
-      .replace(/https:\/\/dogukanlacin\.github\.io\/yazi-adresi\.html/g, fullPostUrl)
+      .replace(/https:\/\/dogukanlacin\.github\.io\/yazi-adresi(\.html)?/g, fullPostUrl)
       .replace(/<h1 class="post-title">\[Yazının Başlığı Buraya Gelecek\]<\/h1>/g, `<h1 class="post-title">${escapeHtml(title)}</h1>`)
       .replace(/<p class="post-subtitle">\[Yazının açılış özeti, edebi alt başlığı veya giriş cümlesi buraya yazılabilir\.\]<\/p>/g, excerpt ? `<p class="post-subtitle">${escapeHtml(excerpt)}</p>` : "")
       .replace(/<time datetime="2026-11-05">5 Kasım 2026<\/time>/g, `<time datetime="${date}">${formattedDate}</time>`)
@@ -434,7 +434,7 @@ function buildAllPosts() {
       imageAlt,
       coverImage,
       featured,
-      url: `${slug}.html`
+      url: slug
     });
 
     console.log(` ✔ Derlendi: ${slug}.html (${formattedDate})`);

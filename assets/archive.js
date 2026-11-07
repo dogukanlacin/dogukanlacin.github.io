@@ -81,7 +81,8 @@
     const dateFormatted = escapeHTML(formatDate(post.date));
     const excerpt = escapeHTML(post.excerpt || '');
     const readingTime = escapeHTML(post.readingTime || '');
-    const url = escapeHTML(post.url || (post.slug ? `${post.slug}.html` : '#'));
+    const rawUrl = post.url || (post.slug ? post.slug : '#');
+    const url = escapeHTML(rawUrl.replace(/\.html$/, ''));
 
     // Kapak Görseli: Hem "image" hem "coverImage" alanlarını ve "imageAlt" etiketini destekler
     const imageUrl = post.image || post.coverImage;

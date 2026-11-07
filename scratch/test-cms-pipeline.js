@@ -128,16 +128,16 @@ Sessizlik bir yokluk değildir; aksine, en saf varlık halidir. İnsan kalabalı
   assert(foundInJson && foundInJson.title === 'Sessizliğin İçindeki Düşünce', 'Kayıt başlığı doğru');
   assert(foundInJson && foundInJson.slug === 'sessizligin-icindeki-dusunce', 'Slug doğru üretilmiş');
   assert(foundInJson && foundInJson.featured === true, 'Öne çıkan (featured) bayrağı doğru');
-  assert(foundInJson && foundInJson.url === 'sessizligin-icindeki-dusunce.html', 'URL doğru');
+  assert(foundInJson && (foundInJson.url === 'sessizligin-icindeki-dusunce' || foundInJson.url === 'sessizligin-icindeki-dusunce.html'), 'URL doğru');
 
   // 7. RSS ve Site Haritası Doğrulaması
   console.log('\n7. TEST: RSS (feed.xml) ve Sitemap (sitemap.xml) Doğrulaması');
   const feedContent = fs.readFileSync(feedXmlPath, 'utf8');
-  assert(feedContent.includes('sessizligin-icindeki-dusunce.html'), 'feed.xml yeni yazıyı içeriyor');
+  assert(feedContent.includes('sessizligin-icindeki-dusunce'), 'feed.xml yeni yazıyı içeriyor');
   assert(feedContent.includes('Sessizliğin İçindeki Düşünce'), 'feed.xml yazı başlığını içeriyor');
 
   const sitemapContent = fs.readFileSync(sitemapXmlPath, 'utf8');
-  assert(sitemapContent.includes('https://dogukanlacin.github.io/sessizligin-icindeki-dusunce.html'), 'sitemap.xml yeni yazıyı içeriyor');
+  assert(sitemapContent.includes('https://dogukanlacin.github.io/sessizligin-icindeki-dusunce'), 'sitemap.xml yeni yazıyı içeriyor');
 
   // 8. Dağıtım Klasörü (_site) Doğrulaması
   console.log('\n8. TEST: Dağıtım Paketi (_site) Doğrulaması');

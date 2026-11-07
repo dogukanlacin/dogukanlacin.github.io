@@ -400,9 +400,9 @@
     function getShareableUrl() {
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical && canonical.href && canonical.href.startsWith('http')) {
-        return canonical.href;
+        return canonical.href.replace(/\.html$/, '');
       }
-      return window.location.origin + window.location.pathname;
+      return (window.location.origin + window.location.pathname).replace(/\.html$/, '');
     }
 
     const shareUrl = getShareableUrl();
@@ -672,7 +672,8 @@
           const dateFormatted = escapeHTML(formatDate(post.date));
           const excerpt = escapeHTML(post.excerpt || '');
           const readingTime = escapeHTML(post.readingTime || '');
-          const url = escapeHTML(post.url || (post.slug ? `${post.slug}.html` : '#'));
+          const rawUrl = post.url || (post.slug ? post.slug : '#');
+          const url = escapeHTML(rawUrl.replace(/\.html$/, ''));
 
           const imageUrl = post.image || post.coverImage;
           const imageAlt = escapeHTML(post.imageAlt || title);
