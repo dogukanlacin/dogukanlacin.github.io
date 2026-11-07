@@ -13,6 +13,8 @@
   let allPosts = [];
   let searchQuery = '';
   let currentSort = 'newest';
+  const POSTS_PER_PAGE = 6;
+  let visibleCount = POSTS_PER_PAGE;
 
   // DOM Elemanları
   const elements = {
@@ -22,6 +24,8 @@
     sortSelect: document.getElementById('archive-sort'),
     featuredArea: document.getElementById('archive-featured'),
     gridArea: document.getElementById('archive-grid'),
+    loadMoreWrap: document.getElementById('archive-load-more-wrap'),
+    loadMoreBtn: document.getElementById('btn-load-more'),
     emptyArea: document.getElementById('archive-empty'),
     emptyTitle: document.getElementById('archive-empty-title'),
     emptyDesc: document.getElementById('archive-empty-desc'),
@@ -152,6 +156,7 @@
       if (elements.controls) elements.controls.style.display = 'none';
       if (elements.featuredArea) elements.featuredArea.style.display = 'none';
       if (elements.gridArea) elements.gridArea.style.display = 'none';
+      if (elements.loadMoreWrap) elements.loadMoreWrap.style.display = 'none';
 
       elements.emptyArea.style.display = 'block';
       if (elements.emptyTitle) elements.emptyTitle.textContent = 'Henüz ilk not düşülmedi.';
@@ -200,14 +205,27 @@
       elements.featuredArea.style.display = 'none';
     }
 
-    // Grid alanını render et
+    // Grid alanını ve "Daha Fazla" butonunu render et
     if (elements.gridArea) {
       if (gridPosts.length > 0) {
-        elements.gridArea.innerHTML = gridPosts.map(p => createPostCardHTML(p, false)).join('');
+        const displayedPosts = gridPosts.slice(0, visibleCount);
+        elements.gridArea.innerHTML = displayedPosts.map(p => createPostCardHTML(p, false)).join('');
         elements.gridArea.style.display = 'grid';
       } else {
         elements.gridArea.innerHTML = '';
         elements.gridArea.style.display = 'none';
+      }
+    }
+
+    if (elements.loadMoreWrap) {
+      if (gridPosts.length > visibleCount) {
+        elements.loadMoreWrap.style.display = 'flex';
+        const remaining = gridPosts.length - visibleCount;
+        if (elements.loadMoreBtn) {
+          elements.loadMoreBtn.innerHTML = `<span>Daha Fazla Yazı (${remaining})</span> <span class="load-more-arrow" aria-hidden="true">↓</span>`;
+        }
+      } else {
+        elements.loadMoreWrap.style.display = 'none';
       }
     }
   }
@@ -233,6 +251,7 @@
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
           searchQuery = e.target.value;
+          visibleCount = POSTS_PER_PAGE;
           if (elements.searchClear) {
             elements.searchClear.style.display = searchQuery ? 'inline-block' : 'none';
           }
@@ -258,6 +277,15 @@
     if (elements.sortSelect) {
       elements.sortSelect.addEventListener('change', (e) => {
         currentSort = e.target.value;
+        visibleCount = POSTS_PER_PAGE;
+        renderArchive();
+      });
+    }
+
+    // Daha Fazla Yazı Butonu
+    if (elements.loadMoreBtn) {
+      elements.loadMoreBtn.addEventListener('click', () => {
+        visibleCount += POSTS_PER_PAGE;
         renderArchive();
       });
     }
