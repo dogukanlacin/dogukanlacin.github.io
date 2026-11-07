@@ -15,7 +15,7 @@ media:
   input: assets/images/posts
   output: /assets/images/posts
   categories: [image]
-  extensions: [jpg, jpeg, png, webp, svg]
+  extensions: [jpg, jpeg, png, webp, svg, gif, avif, JPG, JPEG, PNG, WEBP, SVG, GIF, AVIF]
 
 content:
   - name: posts
@@ -32,30 +32,27 @@ content:
       - name: title
         label: Yazı Başlığı
         type: string
-        required: true
-        description: Yazının ana editoryal başlığı
+        description: Yazının ana editoryal başlığı (İsteğe bağlı)
 
       - name: excerpt
         label: Kısa Açıklama / Alt Başlık
         type: text
-        required: true
-        description: Yazının edebi özeti veya giriş cümlesi
+        description: Yazının edebi özeti veya giriş cümlesi (İsteğe bağlı)
 
       - name: date
         label: Yayın Tarihi
         type: date
-        required: true
-        description: Yazının okuyucuya görüneceği tarih (YYYY-AA-GG)
+        description: Yazının okuyucuya görüneceği tarih (İsteğe bağlı, boşsa bugünün tarihi kullanılır)
 
       - name: coverImage
         label: Kapak Görseli
         type: image
-        description: 16:9 yatay sinematik kapak görseli (İsteğe bağlı)
+        description: Yazı kapak görseli (İsteğe bağlı, boyutu ve en-boy oranı ne olursa olsun kesilmeden tam yüklenir)
 
       - name: imageAlt
         label: Kapak Görseli Betimlemesi (Alt Metni)
         type: string
-        description: Ekran okuyucular ve arama motorları için görsel açıklaması
+        description: Ekran okuyucular ve arama motorları için görsel açıklaması (İsteğe bağlı)
 
       - name: featured
         label: Öne Çıkan Yazı
@@ -66,17 +63,17 @@ content:
       - name: seoTitle
         label: SEO Başlığı
         type: string
-        description: Arama motoru ve sosyal paylaşımlar için özel başlık (Boşsa yazı başlığı kullanılır)
+        description: Arama motoru ve sosyal paylaşımlar için özel başlık (İsteğe bağlı, boşsa yazı başlığı kullanılır)
 
       - name: seoDescription
         label: SEO Açıklaması
         type: text
-        description: Arama motoru ve sosyal paylaşımlar için özel açıklama (Boşsa kısa açıklama kullanılır)
+        description: Arama motoru ve sosyal paylaşımlar için özel açıklama (İsteğe bağlı, boşsa kısa açıklama kullanılır)
 
       - name: body
         label: Yazı İçeriği
         type: rich-text
-        required: true
+        description: Yazının ana metni (İsteğe bağlı)
         options:
           format: markdown
           switcher: true

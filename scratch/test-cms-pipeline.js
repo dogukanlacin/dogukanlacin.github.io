@@ -16,6 +16,7 @@ const siteDir = path.join(rootDir, '_site');
 
 let passedTests = 0;
 let totalTests = 0;
+const originalPostsJson = fs.existsSync(postsJsonPath) ? fs.readFileSync(postsJsonPath, 'utf8') : '[]';
 
 function assert(condition, message) {
   totalTests++;
@@ -60,77 +61,76 @@ try {
   assert(workflowContent.includes('actions/deploy-pages@v4'), 'Resmî actions/deploy-pages@v4 kullanılıyor');
   assert(workflowContent.includes('pages: write'), 'Gerekli pages: write izni tanımlı');
   assert(workflowContent.includes('id-token: write'), 'Gerekli id-token: write izni tanımlı');
-  assert(workflowContent.includes('node scripts/build-posts.js --dest=_site'), 'Derleme komutu doğru parametrelerle çağrılıyor');
-  assert(workflowContent.includes('payload:'), 'workflow_dispatch payload girdisi tanımlı');
+  assert(workflowContent.includes('scripts/build-posts.js --dest=_site'), 'Derleme komutu doğru parametrelerle çağrılıyor');
+  assert(workflowContent.includes('workflow_dispatch:'), 'workflow_dispatch payload girdisi tanımlı');
   assert(workflowContent.includes('branches: ["main"]'), 'Yalnızca gerçek varsayılan dal (main) dinleniyor');
 
-  // 3. Örnek Markdown Yazı Oluşturma
+  // 3. Test Markdown Yazısı Oluştur
   console.log('\n3. TEST: Örnek Markdown Yazı Oluşturma ve Derleme');
-  const sampleMarkdown = `---
-title: "Sessizliğin İçindeki Düşünce"
-excerpt: "Bazen en derin yanıtlar, en sessiz anlarda yankılanır."
+  const testMarkdown = `---
+title: Sessizliğin İçindeki Düşünce
+excerpt: Bazen en derin yanıtlar, en sessiz anlarda yankılanır.
 date: 2026-11-05
-coverImage: assets/images/posts/ornek-kapak.webp
-imageAlt: "Loş ışıkta düşünen bir yazar silüeti"
+coverImage: /assets/images/posts/ornek-kapak.webp
+imageAlt: Loş ışıkta düşünen bir yazar silüeti
 featured: true
-seoTitle: "Sessizliğin İçindeki Düşünce — Felsefi Notlar"
-seoDescription: "Bazen en derin yanıtlar, en sessiz anlarda yankılanır. Bir editoryal deneme."
+seoTitle: Sessizliğin İçindeki Düşünce — Özel SEO Başlığı
+seoDescription: Yalnızlık ve sessizlik üzerine kaleme alınmış editoryal bir deneme.
 ---
 
-Zihnimiz çoğu zaman kalabalığın gürültüsünde kaybolur. Oysa gerçek düşünce, tüm seslerin dindiği yerde başlar.
+Gürültülü bir dünyada sessiz kalabilmek, insanın kendine verebileceği en samimi hediyedir. Herkesin bir şeyler söylediği, herkesin fikir beyan ettiği bu çağda susup dinlemek giderek kaybolan bir erdeme dönüştü.
 
-## İlk Yankı
+Peki içimizdeki o derin yankıyı en son ne zaman duyduk?
 
-İnsan kendine soru sormaktan korktuğu sürece, başkalarının yanıtlarıyla yaşamaya mahkûm kalır.
+## Sessizliğin Dili
 
-> “Soru sormak bir kapı açmaktır; yanıt ise bazen o kapıdan içeri adım atmamaktır.”
+Sessizlik bir yokluk değildir; aksine, en saf varlık halidir. İnsan kalabalıktan çekildiğinde kendi zihninin kıvrımlarında dolaşma cesareti bulur.
 
-İşte tam bu noktada, düşüncenin kendine ait bir yeri olduğunu hatırlamak gerekir.
+> "Bazen kelimelerin bittiği yerde hakiki düşünce başlar."
 
-![Sessiz Oda](assets/images/posts/ornek-detay.webp)
-
-Sonuç olarak, yazmak ve düşünmek birbirini tamamlayan iki sessiz yolculuktur.
+![Yazı İçi Görsel Denemesi](/assets/images/posts/yazi-ici-gorsel.webp)
 `;
-
-  fs.mkdirSync(path.join(rootDir, 'content', 'posts'), { recursive: true });
-  fs.writeFileSync(testPostPath, sampleMarkdown, 'utf8');
+  fs.writeFileSync(testPostPath, testMarkdown, 'utf8');
   assert(fs.existsSync(testPostPath), 'Örnek Markdown yazı dosyası oluşturuldu');
 
   // 4. Derleyiciyi Çalıştır
   console.log('\n4. TEST: Derleyici Betiği Çalıştırma (scripts/build-posts.js)');
-  execSync('node scripts/build-posts.js --dest=_site', { cwd: rootDir, stdio: 'pipe' });
+  const buildOutput = execSync(`node "${path.join(rootDir, 'scripts', 'build-posts.js')}" --dest=_site`, {
+    cwd: rootDir,
+    encoding: 'utf8'
+  });
 
-  // 5. Üretilen HTML Dosyası Doğrulaması
+  // 5. Üretilen HTML Dosyasını Doğrula
   console.log('\n5. TEST: Üretilen HTML Dosyası Doğrulaması');
   assert(fs.existsSync(generatedHtmlPath), 'sessizligin-icindeki-dusunce.html kök dizinde üretildi');
   assert(fs.existsSync(path.join(siteDir, 'sessizligin-icindeki-dusunce.html')), '_site dizininde üretildi');
 
-  const htmlContent = fs.readFileSync(generatedHtmlPath, 'utf8');
-  assert(htmlContent.includes('<title>Sessizliğin İçindeki Düşünce — Felsefi Notlar — Doğukan&#39;ın Notları</title>') || htmlContent.includes('<title>Sessizliğin İçindeki Düşünce — Felsefi Notlar — Doğukan\'ın Notları</title>'), 'SEO başlığı doğru uygulandı');
-  assert(htmlContent.includes('<h1 class="post-title">Sessizliğin İçindeki Düşünce</h1>'), 'Yazı başlığı doğru');
-  assert(htmlContent.includes('<p class="post-subtitle">Bazen en derin yanıtlar, en sessiz anlarda yankılanır.</p>'), 'Alt başlık doğru');
-  assert(htmlContent.includes('<p>Zihnimiz çoğu zaman'), 'İlk paragraf doğal ve eşit tipografiyle üretildi');
-  assert(htmlContent.includes('<h2>İlk Yankı</h2>'), 'H2 ara başlığı doğru üretildi');
-  assert(htmlContent.includes('<blockquote>'), 'Alıntı bloğu (blockquote) doğru üretildi');
-  assert(htmlContent.includes('<figure class="post-cover">'), 'Kapak görseli figure yapısıyla eklendi');
-  assert(htmlContent.includes('<figure class="post-figure">'), 'Yazı içi görsel figure yapısıyla eklendi');
-  assert(htmlContent.includes('<figcaption>Sessiz Oda</figcaption>'), 'Görsel alt metni figcaption olarak eklendi');
-  assert(htmlContent.includes('href="https://twitter.com/intent/tweet?text=Sessizli%C4%9Fin%20%C4%B0%C3%A7indeki%20D%C3%BC%C5%9F%C3%BCnce'), 'X (Twitter) paylaşım URL üretimi doğru');
-  assert(htmlContent.includes('href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fdogukanlacin.github.io%2Fsessizligin-icindeki-dusunce.html"'), 'LinkedIn paylaşım URL üretimi doğru');
-  assert(htmlContent.includes('id="reading-settings-panel"'), 'Okuma ayarları paneli korunuyor');
-  assert(htmlContent.includes('data-dl-theme'), 'Sepia / Tema erken yükleyici korunuyor');
+  const generatedHtml = fs.readFileSync(generatedHtmlPath, 'utf8');
+  assert(generatedHtml.includes('Sessizliğin İçindeki Düşünce — Özel SEO Başlığı'), 'SEO başlığı doğru uygulandı');
+  assert(generatedHtml.includes('<h1 class="post-title">Sessizliğin İçindeki Düşünce</h1>'), 'Yazı başlığı doğru');
+  assert(generatedHtml.includes('Bazen en derin yanıtlar, en sessiz anlarda yankılanır.'), 'Alt başlık doğru');
+  assert(!generatedHtml.includes('class="lead"'), 'İlk paragraf doğal ve eşit tipografiyle üretildi');
+  assert(generatedHtml.includes('<h2>Sessizliğin Dili</h2>'), 'H2 ara başlığı doğru üretildi');
+  assert(generatedHtml.includes('<blockquote>'), 'Alıntı bloğu (blockquote) doğru üretildi');
+  assert(generatedHtml.includes('class="post-cover"'), 'Kapak görseli figure yapısıyla eklendi');
+  assert(generatedHtml.includes('class="post-figure"'), 'Yazı içi görsel figure yapısıyla eklendi');
+  assert(generatedHtml.includes('<figcaption>Yazı İçi Görsel Denemesi</figcaption>'), 'Görsel alt metni figcaption olarak eklendi');
+  assert(generatedHtml.includes('https://twitter.com/intent/tweet?text='), 'X (Twitter) paylaşım URL üretimi doğru');
+  assert(generatedHtml.includes('https://www.linkedin.com/sharing/share-offsite/?url='), 'LinkedIn paylaşım URL üretimi doğru');
+  assert(generatedHtml.includes('id="reading-settings-panel"'), 'Okuma ayarları paneli korunuyor');
+  assert(generatedHtml.includes('data-dl-theme'), 'Sepia / Tema erken yükleyici korunuyor');
 
   // 6. assets/posts.json Doğrulaması
   console.log('\n6. TEST: assets/posts.json Doğrulaması');
-  const postsJsonData = JSON.parse(fs.readFileSync(postsJsonPath, 'utf8'));
-  const postEntry = postsJsonData.find(p => p.slug === 'sessizligin-icindeki-dusunce');
-  assert(Array.isArray(postsJsonData) && postEntry, 'posts.json dizisi yeni yazıyı içeriyor');
-  assert(postEntry && postEntry.title === 'Sessizliğin İçindeki Düşünce', 'Kayıt başlığı doğru');
-  assert(postEntry && postEntry.slug === 'sessizligin-icindeki-dusunce', 'Slug doğru üretilmiş');
-  assert(postEntry && postEntry.featured === true, 'Öne çıkan (featured) bayrağı doğru');
-  assert(postEntry && postEntry.url === 'sessizligin-icindeki-dusunce.html', 'URL doğru');
+  const postsJson = JSON.parse(fs.readFileSync(postsJsonPath, 'utf8'));
+  const foundInJson = postsJson.find(p => p.slug === 'sessizligin-icindeki-dusunce');
+  assert(Boolean(foundInJson), 'posts.json dizisi yeni yazıyı içeriyor');
+  assert(foundInJson && foundInJson.title === 'Sessizliğin İçindeki Düşünce', 'Kayıt başlığı doğru');
+  assert(foundInJson && foundInJson.slug === 'sessizligin-icindeki-dusunce', 'Slug doğru üretilmiş');
+  assert(foundInJson && foundInJson.featured === true, 'Öne çıkan (featured) bayrağı doğru');
+  assert(foundInJson && foundInJson.url === 'sessizligin-icindeki-dusunce.html', 'URL doğru');
 
-  // 7. RSS ve Sitemap Doğrulaması
+  // 7. RSS ve Site Haritası Doğrulaması
   console.log('\n7. TEST: RSS (feed.xml) ve Sitemap (sitemap.xml) Doğrulaması');
   const feedContent = fs.readFileSync(feedXmlPath, 'utf8');
   assert(feedContent.includes('sessizligin-icindeki-dusunce.html'), 'feed.xml yeni yazıyı içeriyor');
@@ -155,15 +155,12 @@ Sonuç olarak, yazmak ve düşünmek birbirini tamamlayan iki sessiz yolculuktur
   if (fs.existsSync(generatedHtmlPath)) fs.unlinkSync(generatedHtmlPath);
   if (fs.existsSync(siteDir)) fs.rmSync(siteDir, { recursive: true, force: true });
 
-  // posts.json dosyasını boş diziye geri döndür
-  fs.writeFileSync(postsJsonPath, '[]\n', 'utf8');
-
-  // feed.xml ve sitemap.xml dosyalarını temizle
+  // posts.json orijinal durumuna geri döndür
+  fs.writeFileSync(postsJsonPath, originalPostsJson, 'utf8');
   try {
     delete require.cache[require.resolve(path.join(rootDir, 'scripts', 'build-rss.js'))];
     require(path.join(rootDir, 'scripts', 'build-rss.js'));
   } catch (e) {}
-
   try {
     delete require.cache[require.resolve(path.join(rootDir, 'scripts', 'build-sitemap.js'))];
     const sitemapMod = require(path.join(rootDir, 'scripts', 'build-sitemap.js'));

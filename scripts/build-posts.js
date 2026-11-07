@@ -241,7 +241,7 @@ function renderMarkdown(markdownText) {
 
 // Okuma Süresi Hesaplayıcı (~200 kelime/dakika)
 function calculateReadingTime(text) {
-  if (!text) return '3 dk okuma';
+  if (!text) return '1 dk okuma';
   const clean = text.replace(/<[^>]*>/g, ' ').replace(/[#*_`>~-]/g, ' ');
   const words = clean.trim().split(/\s+/).filter(Boolean).length;
   const minutes = Math.max(1, Math.ceil(words / 200));
@@ -356,7 +356,7 @@ function buildAllPosts() {
       .replace(/\[Yazının kısa özeti buraya gelecek\.\]/g, escapeHtml(seoDescription || excerpt || title))
       .replace(/https:\/\/dogukanlacin\.github\.io\/yazi-adresi\.html/g, fullPostUrl)
       .replace(/<h1 class="post-title">\[Yazının Başlığı Buraya Gelecek\]<\/h1>/g, `<h1 class="post-title">${escapeHtml(title)}</h1>`)
-      .replace(/<p class="post-subtitle">\[Yazının açılış özeti, edebi alt başlığı veya giriş cümlesi buraya yazılabilir\.\]<\/p>/g, `<p class="post-subtitle">${escapeHtml(excerpt)}</p>`)
+      .replace(/<p class="post-subtitle">\[Yazının açılış özeti, edebi alt başlığı veya giriş cümlesi buraya yazılabilir\.\]<\/p>/g, excerpt ? `<p class="post-subtitle">${escapeHtml(excerpt)}</p>` : "")
       .replace(/<time datetime="2026-11-05">5 Kasım 2026<\/time>/g, `<time datetime="${date}">${formattedDate}</time>`)
       .replace(/2026-11-05T09:00:00\+03:00/g, `${date}T09:00:00+03:00`);
 
@@ -404,7 +404,9 @@ function buildAllPosts() {
       );
 
       const coverFigureHtml = `      <!-- Kapak Görseli -->\n      <figure class="post-cover">\n        <img src="${coverImage}" alt="${escapeHtml(imageAlt)}" loading="eager">\n      </figure>\n`;
-      postHtml = postHtml.replace(/<!-- Kapak Görseli Alanı[\s\S]*?-->/g, coverFigureHtml);
+      postHtml = postHtml.replace(/<!-- KAPAK_GORSELI_ALANI -->/g, coverFigureHtml).replace(/<!-- Kapak Görseli Alanı[\s\S]*?-->/g, coverFigureHtml);
+    } else {
+      postHtml = postHtml.replace(/<!-- KAPAK_GORSELI_ALANI -->/g, "").replace(/<!-- Kapak Görseli Alanı[\s\S]*?-->/g, "");
     }
 
     // Yazı Gövdesini Yerleştir
