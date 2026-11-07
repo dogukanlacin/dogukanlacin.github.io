@@ -1,6 +1,6 @@
 ---
 title: "Özgürlük İllüzyonu: Seçtiğimizi Sanırken Seçiliyor Muyuz?"
-date: 2026-11-07
+date: 2026-05-20
 coverImage: /assets/images/posts/25721b4f-3e92-4def-9e83-85029412dea8_2816x1536.webp
 featured: false
 ---
@@ -93,4 +93,3 @@ Belki de asıl soru şu:
 
 Biz mi içerikleri seçiyoruz, yoksa içerikler mi bizi seçiyor?
 
-  
