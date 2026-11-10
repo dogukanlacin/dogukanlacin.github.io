@@ -60,6 +60,12 @@ function generateSitemap() {
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>${siteConfig.siteUrl}kitap</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>${siteConfig.siteUrl}about</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>

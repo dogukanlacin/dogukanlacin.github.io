@@ -491,7 +491,7 @@ function buildAllPosts() {
     fs.mkdirSync(destDir, { recursive: true });
 
     // Ana statik dosyaları kopyala
-    const staticFiles = ['index.html', 'about.html', '404.html', 'favicon.ico', 'robots.txt', 'feed.xml', 'sitemap.xml'];
+    const staticFiles = ['index.html', 'kitap.html', 'about.html', '404.html', 'favicon.ico', 'robots.txt', 'feed.xml', 'sitemap.xml'];
     for (const file of staticFiles) {
       const src = path.join(rootDir, file);
       if (fs.existsSync(src)) {
