@@ -2652,3 +2652,212 @@ html[data-dl-theme="sepia"] .archive-load-more-btn:hover {
   color: #8c7355;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
+
+/* --------------------------------------------------------------------------
+   Instagram & Sosyal Bağlantı Stilleri
+   -------------------------------------------------------------------------- */
+
+/* Header Navigasyonunda Instagram */
+.nav-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  transition: color var(--transition-fast);
+}
+
+.nav-instagram svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.nav-instagram:hover svg {
+  transform: scale(1.12);
+}
+
+.nav-instagram:hover {
+  color: var(--accent-gold);
+}
+
+html[data-dl-theme="sepia"] .nav-instagram {
+  color: #655e54;
+}
+
+html[data-dl-theme="sepia"] .nav-instagram:hover {
+  color: #967e58;
+}
+
+/* Hero & CTA Alanında Instagram Butonu */
+.btn-hero-instagram {
+  gap: 8px;
+}
+
+.btn-hero-instagram svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.btn-hero-instagram:hover svg {
+  transform: scale(1.12);
+}
+
+/* Yazar Vignette (Ana Sayfa) Aksiyonları */
+.vignette-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+.vignette-instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: all var(--transition-fast);
+}
+
+.vignette-instagram-link svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.vignette-instagram-link:hover {
+  color: var(--accent-gold);
+}
+
+.vignette-instagram-link:hover svg {
+  transform: scale(1.12);
+}
+
+.vignette-instagram-link .vignette-arrow {
+  transition: transform var(--transition-fast);
+  font-size: 13px;
+  display: inline-block;
+}
+
+.vignette-instagram-link:hover .vignette-arrow {
+  transform: translate(2px, -2px);
+}
+
+html[data-dl-theme="sepia"] .vignette-instagram-link {
+  color: #6e6557;
+}
+
+html[data-dl-theme="sepia"] .vignette-instagram-link:hover {
+  color: #967e58;
+}
+
+/* Hakkımda Sayfası Künye Linki */
+.about-fact-link {
+  color: var(--accent-gold);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.about-fact-link:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+html[data-dl-theme="sepia"] .about-fact-link {
+  color: #967e58;
+}
+
+html[data-dl-theme="sepia"] .about-fact-link:hover {
+  color: #1a1614;
+}
+
+/* Hakkımda CTA Aksiyonları */
+.about-cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Yazı Sonu Yazar Kartı (Post Author Box) Aksiyonları */
+.author-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.author-instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.author-instagram-link svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.author-instagram-link .author-arrow {
+  transition: transform var(--transition-fast);
+  font-size: 12px;
+  display: inline-block;
+}
+
+.author-instagram-link:hover {
+  color: var(--accent-gold);
+}
+
+.author-instagram-link:hover svg {
+  transform: scale(1.12);
+}
+
+.author-instagram-link:hover .author-arrow {
+  transform: translate(2px, -2px);
+}
+
+html[data-dl-theme="sepia"] .author-instagram-link {
+  color: #655e54;
+}
+
+html[data-dl-theme="sepia"] .author-instagram-link:hover {
+  color: #967e58;
+}
+
+/* Footer Instagram Linki */
+.footer-instagram-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.footer-instagram-link svg {
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.footer-instagram-link:hover {
+  color: var(--accent-gold);
+}
+
+.footer-instagram-link:hover svg {
+  transform: scale(1.12);
+}
+
+html[data-dl-theme="sepia"] .footer-instagram-link:hover {
+  color: #967e58;
+}
